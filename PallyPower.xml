@@ -7,12 +7,8 @@
     <AbsDimension x="16" y="16"/>
   </Size>
   <Scripts>
-    <OnMouseDown>
-      PallyPower_StartScaling(arg1)
-    </OnMouseDown>
-    <OnMouseUp>
-      PallyPower_StopScaling(arg1)
-    </OnMouseUp>
+    <OnMouseDown function="PallyPower_StartScaling" />
+    <OnMouseUp function="PallyPower_StopScaling" />
   </Scripts>
   <NormalTexture file="Interface\AddOns\PallyPower\PallyPower-ResizeGrip"/>
   <HighlightTexture file="Interface\AddOns\PallyPower\PallyPower-ResizeGrip" alphaMode="ADD"/>
@@ -39,23 +35,11 @@
     </Layer>
   </Layers>
   <Scripts>
-    <OnLoad>
-      PallyPowerGridButton_OnLoad(this);
-      this:RegisterForClicks("LeftButtonUp","RightButtonUp");
-      this:EnableMouseWheel(1)
-    </OnLoad>
-    <OnClick>
-      PallyPowerGridButton_OnClick(this,arg1)
-    </OnClick>
-    <OnEnter>
-      PallyPowerGridButton_OnEnter(this)
-    </OnEnter>
-    <OnLeave>
-      PallyPowerGridButton_OnLeave(this)
-    </OnLeave>
-    <OnMouseWheel>
-      PallyPowerGridButton_OnMouseWheel(this, arg1)
-    </OnMouseWheel>
+    <OnLoad function="PallyPowerGridButton_OnLoad" />
+    <OnClick function="PallyPowerGridButton_OnClick" />
+    <OnEnter function="PallyPowerGridButton_OnEnter" />
+    <OnLeave function="PallyPowerGridButton_OnLeave" />
+    <OnMouseWheel function="PallyPowerGridButton_OnMouseWheel" />
   </Scripts>
 </Button>
 
@@ -63,16 +47,16 @@
   <Size>
     <AbsDimension x="100" y="34" />
   </Size>
-  <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+  <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="" tile="true">
     <EdgeSize>
       <AbsValue val="8"/>
     </EdgeSize>
     <TileSize>
       <AbsValue val="8"/>
     </TileSize>
-    <BackgroundInsets>
+    <!--<BackgroundInsets>
       <AbsInset left="2" right="2" top="3" bottom="2"/>
-    </BackgroundInsets>
+    </BackgroundInsets>-->
   </Backdrop>
   <Layers>
     <Layer level="OVERLAY">
@@ -127,11 +111,11 @@
       </Layer>
     </Layers>
     <Scripts>
-      <OnLoad>PallyPowerBuffButton_OnLoad(this);this:RegisterForClicks("LeftButtonUp","RightButtonUp")</OnLoad>
-      <OnClick>PallyPowerBuffButton_OnClick(this,arg1)</OnClick>
-      <OnEnter>PallyPowerBuffButton_OnEnter(this)</OnEnter>
-      <OnLeave>PallyPowerBuffButton_OnLeave(this)</OnLeave>
-    </Scripts>  
+      <OnLoad function="PallyPowerBuffButton_OnLoad" />
+      <OnClick function="PallyPowerBuffButton_OnClick" />
+      <OnEnter function="PallyPowerBuffButton_OnEnter" />
+      <OnLeave function="PallyPowerBuffButton_OnLeave" />
+    </Scripts>
   </Button>
 	<Frame name="UserTemplate" hidden="false" virtual="true">
 	   <Size>
@@ -243,7 +227,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine2" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -255,7 +239,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine3" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -267,7 +251,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine4" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -279,7 +263,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine5" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -291,7 +275,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine6" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -303,7 +287,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine7" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -315,7 +299,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine8" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -327,7 +311,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine9" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -339,7 +323,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
 				<FontString name="$parentSkill0" inherits="GameFontNormalSmall" text="0/0" justifyH="LEFT">
 				  <Size>
 				    <AbsDimension x="30" y="16"/>
@@ -471,7 +455,7 @@
 		  </Button>
 		</Frames>
 	</Frame>
-	
+
 	<Frame name="PallyPowerBuffBar" hidden="false" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent">
 	   <Size>
 	     <AbsDimension x="110" y="302"/>
@@ -492,14 +476,12 @@
 				  <AbsDimension x="110" y="20" />
 				</Size>
     		<Scripts>
-          <OnEnter>
-             PallyPower_ShowCredits()
-          </OnEnter>
-          <OnLeave>
-             HideUIPanel(GameTooltip);
-          </OnLeave>
-          <OnMouseDown>PallyPowerBuffBar_MouseDown(arg1)</OnMouseDown>
-          <OnMouseUp>PallyPowerBuffBar_MouseUp()</OnMouseUp>
+				<OnEnter function="PallyPower_ShowCredits" />
+				<OnLeave>
+					HideUIPanel(GameTooltip);
+				</OnLeave>
+				<OnMouseDown function="PallyPowerBuffBar_MouseDown" />
+				<OnMouseUp function="PallyPowerBuffBar_MouseUp" />
     		</Scripts>
 			<Layers>
 			<Layer level="OVERLAY">
@@ -513,7 +495,7 @@
     						<AbsDimension x="0" y="0"/>
     					</Offset>
     				</Anchor>
-    			</Anchors> 
+    			</Anchors>
     		</FontString>
 			</Layer>
 			</Layers>
@@ -601,12 +583,10 @@
 			</Button>
     </Frames>
 	<Scripts>
-				<OnUpdate>
-			  PallyPower_OnUpdate(arg1);
-			</OnUpdate>
+		<OnUpdate function="PallyPower_OnUpdate" />
 	</Scripts>
 	</Frame>
-	
+
 	<Frame name="PallyPowerFrame" hidden="true" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent">
 		<Size>
 			<AbsDimension x="590" y="760"/>
@@ -642,7 +622,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine3" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -654,7 +634,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine4" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -666,7 +646,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine5" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -678,7 +658,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine6" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -690,7 +670,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine7" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -702,7 +682,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine8" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -714,7 +694,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentLine9" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
 						<AbsDimension x="2" y="56"/>
@@ -726,7 +706,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass0" file="Interface\AddOns\PallyPower\Icons\Warrior" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -738,7 +718,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass1" file="Interface\AddOns\PallyPower\Icons\Rogue" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -750,7 +730,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass2" file="Interface\AddOns\PallyPower\Icons\Priest" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -762,7 +742,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass3" file="Interface\AddOns\PallyPower\Icons\Druid" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -774,7 +754,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass4" file="Interface\AddOns\PallyPower\Icons\Paladin" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -786,7 +766,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass5" file="Interface\AddOns\PallyPower\Icons\Hunter" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -798,7 +778,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass6" file="Interface\AddOns\PallyPower\Icons\Mage" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -810,7 +790,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
         <Texture name="$parentClass7" file="Interface\AddOns\PallyPower\Icons\Warlock" hidden="false">
 					<Size>
 						<AbsDimension x="32" y="32"/>
@@ -822,7 +802,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</Texture>				
+				</Texture>
 			</Layer>
 
 		</Layers>
@@ -839,15 +819,13 @@
 				  <AbsDimension x="100" y="20" />
 				</Size>
     		<Scripts>
-          <OnEnter>
-             PallyPower_ShowCredits()
-          </OnEnter>
+          <OnEnter function="PallyPower_ShowCredits" />
           <OnLeave>
              HideUIPanel(GameTooltip);
           </OnLeave>
-          <OnMouseDown>PallyPowerFrame_MouseDown(arg1)</OnMouseDown>
-          <OnMouseUp>PallyPowerFrame_MouseUp()</OnMouseUp>
-          <OnUpdate>PallyPowerGrid_Update()</OnUpdate>
+          <OnMouseDown function="PallyPowerFrame_MouseDown" />
+          <OnMouseUp function="PallyPowerFrame_MouseUp" />
+          <OnUpdate function="PallyPowerGrid_Update" />
     		</Scripts>
 			<Layers><Layer level="OVERLAY">
     		<FontString name="$parentText" inherits="GameFontNormal" text="Pally Power" justifyH="CENTER">
@@ -860,7 +838,7 @@
     						<AbsDimension x="5" y="0"/>
     					</Offset>
     				</Anchor>
-    			</Anchors> 
+    			</Anchors>
     		</FontString>
 			</Layer>
 			</Layers>
@@ -886,11 +864,9 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnClick>
-					  PallyPower_Refresh()
-					</OnClick>
+					<OnClick function="PallyPower_Refresh" />
 				</Scripts>
-			</Button>			
+			</Button>
 			<Button name="$parentResizeButton" inherits="PallyPowerResizeTemplate">
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT">
@@ -913,11 +889,9 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnClick>
-					  PallyPower_Clear()
-					</OnClick>
+					<OnClick function="PallyPower_Clear" />
 				</Scripts>
-			</Button>			
+			</Button>
 
 			<Button name="$parentOptions" inherits="GameMenuButtonTemplate" text="PALLYPOWER_OPTIONS" hidden="false">
 				<Size>
@@ -931,11 +905,9 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnClick>
-					  PallyPower_Options()
-					</OnClick>
+					<OnClick function="PallyPower_Options" />
 				</Scripts>
-			</Button>			
+			</Button>
 
 			<Frame name="$parentPlayer1" inherits="UserTemplate">
 				<Anchors>
@@ -1001,25 +973,19 @@
 					<Anchor point="TOPLEFT" relativeTo="$parentPlayer11" relativePoint="BOTTOMLEFT" />
 				</Anchors>
 			</Frame>
-    </Frames>		
+    </Frames>
  		<Scripts>
-			<OnLoad>
-				PallyPower_OnLoad();
-			</OnLoad>
-			<OnEvent>
-				PallyPower_OnEvent(event);
-			</OnEvent>
-      <OnMouseUp>PallyPowerFrame_MouseUp()</OnMouseUp> 
-      <OnMouseDown>PallyPowerFrame_MouseDown(arg1)</OnMouseDown> 
-      <OnHide>if ( this.isMoving ) then this:StopMovingOrSizing(); this.isMoving = false; end</OnHide> 
+			<OnLoad function="PallyPower_OnLoad" />
+			<OnEvent function="PallyPower_OnEvent" />
+      		<OnMouseUp function="PallyPowerFrame_MouseUp" />
+      		<OnMouseDown function="PallyPowerFrame_MouseDown" />
+      		<OnHide>if ( self.isMoving ) then self:StopMovingOrSizing(); self.isMoving = false; end</OnHide>
  		</Scripts>
 	</Frame>
 
 	<Frame name="PallyPower_ScalingFrame" hidden="true">
 		<Scripts>
-			<OnUpdate>
-				PallyPower_ScalingFrame_OnUpdate(arg1)
-			</OnUpdate>
+			<OnUpdate function="PallyPower_ScalingFrame_OnUpdate" />
 		</Scripts>
 	</Frame>
 
@@ -1162,30 +1128,27 @@
         </Layers>
         <FontString inherits="ChatFontNormal"/>
         <Scripts>
-        <OnShow>
-          this:SetNumeric(1);
-          this:SetText(PP_PerUser.scanfreq);
-        </OnShow>
-					<OnTabPressed>
-						PallyPower_OptionsFrameScan2:SetFocus();
-					</OnTabPressed>
-					<OnEditFocusLost>
-						this:HighlightText(0, 0);
-					</OnEditFocusLost>
-					<OnChar>
-						
-					</OnChar>
-					<OnEnterPressed>
-						PallyPower_OptionsFrameScan2:SetFocus();
-					</OnEnterPressed>
-					<OnEscapePressed>
-						this:GetParent():Hide();
-					</OnEscapePressed>
-					<OnTextChanged>
-					   if (this:GetNumber() > 0) then 
-  					   PallyPower_SetOption("scanfreq", this:GetNumber());
-  					 end
-					</OnTextChanged>
+			<OnShow>
+			self:SetNumeric(1);
+			self:SetText(PP_PerUser.scanfreq);
+			</OnShow>
+			<OnTabPressed>
+				PallyPower_OptionsFrameScan2:SetFocus();
+			</OnTabPressed>
+			<OnEditFocusLost>
+				self:HighlightText(0, 0);
+			</OnEditFocusLost>
+			<OnEnterPressed>
+				PallyPower_OptionsFrameScan2:SetFocus();
+			</OnEnterPressed>
+			<OnEscapePressed>
+				self:GetParent():Hide();
+			</OnEscapePressed>
+			<OnTextChanged>
+				if (self:GetNumber() > 0) then
+				PallyPower_SetOption("scanfreq", self:GetNumber());
+				end
+			</OnTextChanged>
         </Scripts>
       </EditBox>
       <EditBox name="$parentScan2" enableMouse="true" letters="8" numeric="true">
@@ -1234,29 +1197,29 @@
         <FontString inherits="ChatFontNormal"/>
         <Scripts>
         <OnShow>
-          this:SetNumeric(1);
-          this:SetText(PP_PerUser.scanperframe);
+          self:SetNumeric(1);
+          self:SetText(PP_PerUser.scanperframe);
         </OnShow>
-					<OnTabPressed>
-						PallyPower_OptionsFrameScan1:SetFocus();
-					</OnTabPressed>
-					<OnEditFocusLost>
-						this:HighlightText(0, 0);
-					</OnEditFocusLost>
-					<OnChar>
-						
-					</OnChar>
-					<OnEnterPressed>
-						PallyPower_OptionsFrameScan1:SetFocus();
-					</OnEnterPressed>
-					<OnEscapePressed>
-						this:GetParent():Hide();
-					</OnEscapePressed>
-					<OnTextChanged>
-					   if (this:GetNumber() > 0) then 
-  					   PallyPower_SetOption("scanperframe", this:GetNumber());
-  					 end
-					</OnTextChanged>
+		<OnTabPressed>
+			PallyPower_OptionsFrameScan1:SetFocus();
+		</OnTabPressed>
+		<OnEditFocusLost>
+			self:HighlightText(0, 0);
+		</OnEditFocusLost>
+		<OnChar>
+
+		</OnChar>
+		<OnEnterPressed>
+			PallyPower_OptionsFrameScan1:SetFocus();
+		</OnEnterPressed>
+		<OnEscapePressed>
+			self:GetParent():Hide();
+		</OnEscapePressed>
+		<OnTextChanged>
+			if (self:GetNumber() > 0) then
+			PallyPower_SetOption("scanperframe", self:GetNumber());
+			end
+		</OnTextChanged>
         </Scripts>
       </EditBox>
       <CheckButton name="$parentFeedback" inherits="OptionsCheckButtonTemplate">
@@ -1271,8 +1234,8 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnShow>if (PP_PerUser.chatfeedback) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
-          <OnClick>PP_PerUser.chatfeedback = this:GetChecked()</OnClick>
+          <OnShow>if (PP_PerUser.chatfeedback) then self:SetChecked(true) else self:SetChecked(false) end</OnShow>
+          <OnClick>PP_PerUser.chatfeedback = self:GetChecked()</OnClick>
         </Scripts>
       </CheckButton>
       <CheckButton name="$parentSmart" inherits="OptionsCheckButtonTemplate">
@@ -1287,14 +1250,14 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnShow>if (PP_PerUser.smartbuffs) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
-          <OnClick>PP_PerUser.smartbuffs = this:GetChecked()</OnClick>
+          <OnShow>if (PP_PerUser.smartbuffs) then self:SetChecked(true) else self:SetChecked(false) end</OnShow>
+          <OnClick>PP_PerUser.smartbuffs = self:GetChecked()</OnClick>
         </Scripts>
       </CheckButton>
     </Frames>
 		<Scripts>
 			<OnLoad>
-			this:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
+			self:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
 			</OnLoad>
 		</Scripts>
   </Frame>

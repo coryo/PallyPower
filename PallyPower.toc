@@ -1,4 +1,4 @@
-## Interface: 11200
+## Interface: 11302
 ## Title: PallyPower
 ## Author: Aznamir
 ## DefaultState: Enabled
