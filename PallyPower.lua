@@ -298,8 +298,18 @@ function PallyPower_UpdateUI()
           local nneed = 0;
           local nhave = 0;
           local ndead = 0;
+          local next_expiration = -1;
           if CurrentBuffs[class] then
             for member, stats in pairs(CurrentBuffs[class]) do
+
+              if stats[assign[class]] and stats["expiration"] > 0 then
+                if next_expiration < 0 then
+                  next_expiration = stats["expiration"]
+                elseif stats["expiration"] < next_expiration then
+                  next_expiration = stats["expiration"]
+                end
+              end
+
               if stats["visible"] then
                 if not stats[assign[class]] then
                   if UnitIsDeadOrGhost(member) then
@@ -324,7 +334,9 @@ function PallyPower_UpdateUI()
           else
             getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed);
           end
-          getglobal("PallyPowerBuffBarBuff"..BuffNum.."Time"):SetText(PallyPower_FormatTime(LastCast[assign[class]..class]));
+
+          getglobal("PallyPowerBuffBarBuff"..BuffNum.."Time"):SetText(PallyPower_FormatTime(next_expiration - GetTime()))
+
           if not (nneed > 0 or nhave > 0) then
           else
             BuffNum = BuffNum + 1
@@ -800,11 +812,13 @@ function PallyPower_ScanRaid()
       PP_ScanInfo[cid][unit] = {};
       PP_ScanInfo[cid][unit]["name"] = name;
       PP_ScanInfo[cid][unit]["visible"] = UnitIsVisible(unit);
+      PP_ScanInfo[cid][unit]["expiration"] = -1;
 
       local j=1
       while UnitBuff(unit, j) do
-        local name = UnitBuff(unit, j)
+        local name, _, _, _, _, expiration = UnitBuff(unit, j)
         local txtID = PallyPower_GetBuffTextureID(name)
+        PP_ScanInfo[cid][unit]["expiration"] = expiration
         if txtID >5 then
 	        txtID = txtID - 6
         end
