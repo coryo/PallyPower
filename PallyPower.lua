@@ -164,7 +164,7 @@ end
 function PallyPower_Report()
   if PallyPower_CanControl(UnitName("player")) then
     local type
-    if GetNumGroupMembers() > 0 then
+    if IsInRaid() then
       type = "RAID"
     else
       type = "PARTY"
@@ -564,6 +564,8 @@ function PallyPowerBuffBar_MouseDown(self, button)
 end
 
 function PallyPowerBuffBar_MouseUp(self, button)
+  if button ~= "LeftButton" then return end
+
   if ( PallyPowerBuffBar.isMoving ) then
     PallyPowerBuffBar:StopMovingOrSizing();
     PallyPowerBuffBar.isMoving = false;
