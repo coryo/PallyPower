@@ -4,4 +4,8 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: PP_PerUser,PallyPower_Assignments
+
+libs\LibStub\LibStub.lua
+libs\LibClassicDurations\LibClassicDurations.xml
+
 PallyPower.xml

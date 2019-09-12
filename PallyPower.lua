@@ -1,3 +1,8 @@
+PallyPower = {};
+
+local LCD = LibStub("LibClassicDurations")
+LCD:Register("PallyPower") -- tell library it's being used and should start working
+
 local initalized = false
 
 BINDING_HEADER_PALLYPOWER_HEADER = "Pally Power";
@@ -8,7 +13,7 @@ BINDING_NAME_REPORT = "Report Assignments";
 
  PallyPower_Assignments = { };
 
-PallyPower = {};
+
 
  BlessingIcon = {};
 BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom";
@@ -301,6 +306,7 @@ function PallyPower_UpdateUI()
           local next_expiration = -1;
           if CurrentBuffs[class] then
             for member, stats in pairs(CurrentBuffs[class]) do
+              -- print(stats["name"], stats['expiration'])
 
               if stats[assign[class]] and stats["expiration"] > 0 then
                 if next_expiration < 0 then
@@ -366,7 +372,6 @@ function PallyPower_ScanSpells()
     local i = 1
     while true do
        local spellName, spellRank = GetSpellBookItemName(i, BOOKTYPE_SPELL)
-      --  local spellTexture = GetSpellTexture(i, BOOKTYPE_SPELL)
        if not spellName then
           do break end
        end
@@ -816,9 +821,11 @@ function PallyPower_ScanRaid()
 
       local j=1
       while UnitBuff(unit, j) do
-        local name, _, _, _, _, expiration = UnitBuff(unit, j)
+        local name, _, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
         local txtID = PallyPower_GetBuffTextureID(name)
-        PP_ScanInfo[cid][unit]["expiration"] = expiration
+        if txtID >=0 and expiration > 0 then
+          PP_ScanInfo[cid][unit]["expiration"] = expiration
+        end
         if txtID >5 then
 	        txtID = txtID - 6
         end
