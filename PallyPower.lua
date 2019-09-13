@@ -307,12 +307,13 @@ function PallyPower_UpdateUI()
           if CurrentBuffs[class] then
             for member, stats in pairs(CurrentBuffs[class]) do
               -- print(stats["name"], stats['expiration'])
+              local exp = stats["expiration"][btn.buffID]
 
-              if stats[assign[class]] and stats["expiration"] > 0 then
+              if exp and stats[assign[class]] and exp > 0 then
                 if next_expiration < 0 then
-                  next_expiration = stats["expiration"]
-                elseif stats["expiration"] < next_expiration then
-                  next_expiration = stats["expiration"]
+                  next_expiration = exp
+                elseif exp < next_expiration then
+                  next_expiration = exp
                 end
               end
 
@@ -555,6 +556,7 @@ function PallyPower_ShowCredits(self)
    GameTooltip:AddLine(PallyPower_Credits3);
    GameTooltip:AddLine(PallyPower_Credits4,0,1,0);
    GameTooltip:AddLine(PallyPower_Credits5);
+   GameTooltip:AddLine(PallyPower_Credits6);
    GameTooltip:Show()
 end
 
@@ -817,18 +819,19 @@ function PallyPower_ScanRaid()
       PP_ScanInfo[cid][unit] = {};
       PP_ScanInfo[cid][unit]["name"] = name;
       PP_ScanInfo[cid][unit]["visible"] = UnitIsVisible(unit);
-      PP_ScanInfo[cid][unit]["expiration"] = -1;
+      PP_ScanInfo[cid][unit]["expiration"] = {};
 
       local j=1
       while UnitBuff(unit, j) do
         local name, _, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
         local txtID = PallyPower_GetBuffTextureID(name)
         if txtID >=0 and expiration > 0 then
-          PP_ScanInfo[cid][unit]["expiration"] = expiration
+            PP_ScanInfo[cid][unit]["expiration"][txtID] = expiration
         end
         if txtID >5 then
 	        txtID = txtID - 6
         end
+
         PP_ScanInfo[cid][unit][txtID] = true
         j=j+1
       end
