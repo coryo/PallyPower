@@ -306,7 +306,6 @@ function PallyPower_UpdateUI()
           local next_expiration = -1;
           if CurrentBuffs[class] then
             for member, stats in pairs(CurrentBuffs[class]) do
-              -- print(stats["name"], stats['expiration'])
               local exp = stats["expiration"][btn.buffID]
 
               if exp and stats[assign[class]] and exp > 0 then
@@ -319,6 +318,7 @@ function PallyPower_UpdateUI()
 
               if stats["visible"] then
                 if not stats[assign[class]] then
+                  btn:SetAttribute("unit", stats["unitid"])
                   if UnitIsDeadOrGhost(member) then
                     ndead = ndead + 1;
                     tinsert(btn.dead, stats["name"]);
@@ -354,6 +354,8 @@ function PallyPower_UpdateUI()
             else
               btn:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
             end
+            btn:SetAttribute("type", "spell");
+            btn:SetAttribute("spell", BuffIcon[assign[class]])
             btn:Show();
           end
         end
@@ -361,6 +363,7 @@ function PallyPower_UpdateUI()
     end
     for rest = BuffNum, 8 do
         local btn = getglobal("PallyPowerBuffBarBuff"..rest);
+        btn:SetAttribute("spell", nil)
         btn:Hide();
     end
     PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
@@ -818,6 +821,7 @@ function PallyPower_ScanRaid()
       end
       PP_ScanInfo[cid][unit] = {};
       PP_ScanInfo[cid][unit]["name"] = name;
+      PP_ScanInfo[cid][unit]["unitid"] = unit;
       PP_ScanInfo[cid][unit]["visible"] = UnitIsVisible(unit);
       PP_ScanInfo[cid][unit]["expiration"] = {};
 
@@ -870,39 +874,6 @@ function PallyPowerBuffButton_OnLoad(self, btn)
   self:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
 end
 
-function PallyPowerBuffButton_OnClick(self, btn, mousebtn)
-  -- -- temporarily disable auto self cast
-  -- local self_cast = GetCVar("autoSelfCast")
-  -- SetCVar("autoSelfCast", "0")
-
-  -- ClearTarget()
-  -- PP_Debug("Casting "..btn.buffID.." on "..btn.classID)
-  -- -- CastSpell(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL);
-  -- local RecentCast = false
-  -- if LastCast[btn.buffID..btn.classID] and LastCast[btn.buffID..btn.classID] > (15 * 60) - 30 then
-  --   RecentCast = true
-  -- end
-  -- for unit, stats in pairs(CurrentBuffs[btn.classID]) do
-  --   if SpellCanTargetUnit(unit) and not (RecentCast and string.find(table.concat(LastCastOn[btn.classID], " "), unit)) then
-  --     PP_Debug("Trying to cast on "..unit);
-  --     SpellTargetUnit(unit)
-  --     PP_NextScan = 1
-  --     LastCast[btn.buffID..btn.classID] = 15 * 60;
-  --     if not RecentCast then
-  --       LastCastOn[btn.classID] = {}
-  --     end
-  --     tinsert(LastCastOn[btn.classID], unit)
-  --     PallyPower_ShowFeedback(format(PallyPower_Casting, PallyPower_BlessingID[btn.buffID], PallyPower_ClassID[btn.classID], UnitName(unit)), 0.0, 1.0, 0.0);
-  --     TargetLastTarget()
-  --     SetCVar("autoSelfCast", self_cast)
-  --     return
-  --   end
-  -- end
-  -- SpellStopTargeting()
-  -- TargetLastTarget()
-  -- PallyPower_ShowFeedback(format(PallyPower_CouldntFind, PallyPower_BlessingID[btn.buffID], PallyPower_ClassID[btn.classID]), 0.0, 1.0, 0.0);
-  -- SetCVar("autoSelfCast", self_cast)
-end
 
 function PallyPowerBuffButton_OnEnter(self, motion)
   GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
@@ -913,6 +884,7 @@ function PallyPowerBuffButton_OnEnter(self, motion)
   GameTooltip:AddLine(PallyPower_Dead..table.concat(self.dead, ", "), 1, 0, 0);
   GameTooltip:Show()
 end
+
 
 function PallyPowerBuffButton_OnLeave(self, btn)
    GameTooltip:Hide()

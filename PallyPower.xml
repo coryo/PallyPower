@@ -43,7 +43,11 @@
   </Scripts>
 </Button>
 
-<Button name="PallyPowerBuffButtonTemplate" hidden="false" virtual="true">
+<Button name="PallyPowerBuffButtonTemplate" hidden="false" virtual="true" inherits="SecureActionButtonTemplate">
+	<Attributes>
+		<Attribute name="type" value="spell" />
+		<Attribute name="action" value="1" type="number" />
+	</Attributes>
   <Size>
     <AbsDimension x="100" y="34" />
   </Size>
@@ -112,7 +116,7 @@
     </Layers>
     <Scripts>
       <OnLoad function="PallyPowerBuffButton_OnLoad" />
-      <OnClick function="PallyPowerBuffButton_OnClick" />
+      <!-- <OnClick function="PallyPowerBuffButton_OnClick" /> -->
       <OnEnter function="PallyPowerBuffButton_OnEnter" />
       <OnLeave function="PallyPowerBuffButton_OnLeave" />
     </Scripts>
