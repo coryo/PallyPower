@@ -1,8 +1,8 @@
 PallyPower_Version = "1.067"
-  SLASH_PALLYPOWER1 = "/pp"
-  SLASH_PALLYPOWER2 = "/pallypower"
+SLASH_PALLYPOWER1 = "/pp"
+SLASH_PALLYPOWER2 = "/pallypower"
 
- PallyPower_BlessingID = { };
+PallyPower_BlessingID = { };
 PallyPower_BlessingID[0] = "Wisdom";
 PallyPower_BlessingID[1] = "Might";
 PallyPower_BlessingID[2] = "Salvation";
@@ -101,6 +101,7 @@ if (GetLocale() == "deDE") then
     PallyPower_Credits3 = "Deutsche Lokalisierung von Nextorus";
     PallyPower_Credits4 = "Erstellt f\195\188r Resurrection auf Nathrezim";
     PallyPower_Credits5 = "Vielen Dank an: Falline, Indada, Pinch, Tir, Ossijeanne";
+    PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg";
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Konnte kein Ziel finden f\195\188r %s auf %s!";
@@ -157,6 +158,7 @@ elseif (GetLocale() == "frFR") then
     PallyPower_Credits3 = "Localisation Francaise par Gagou"
     PallyPower_Credits4 = "Made for Resurrection of Nathrezim"
     PallyPower_Credits5 = "Special Thanks: Falline, Indada, Pinch, Tir"
+    PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg"
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Ne peut trouver une cible pour b\195\169n\195\169diction %s sur %s!"
