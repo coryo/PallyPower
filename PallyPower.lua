@@ -24,14 +24,6 @@ local PP_ScanInfo = nil
 local PP_NextScan = PP_PerUser.scanfreq
 local CurrentBuffs = {};
 
-local BlessingIcon = {
-    [0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom",
-    [1] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofKings",
-    [2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation",
-    [3] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofLight",
-    [4] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings",
-    [5] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary"
-}
 
 local BuffIcon = {
     [0] = 135912, -- Greater Blessing of Wisdom
@@ -225,35 +217,35 @@ function PallyPowerGrid_Update()
     if PallyPowerFrame:IsVisible() then
         PallyPowerFrame:SetScale(PP_PerUser.scalemain);
         for name,skills in pairs(AllPallys) do
-            getglobal("PallyPowerFramePlayer"..i.."Name"):SetText(name)
-            getglobal("PallyPowerFramePlayer"..i.."Symbols"):SetText(skills["symbols"])
-            getglobal("PallyPowerFramePlayer"..i.."Symbols"):SetTextColor(1,1,0.5)
+            _G["PallyPowerFramePlayer"..i.."Name"]:SetText(name)
+            _G["PallyPowerFramePlayer"..i.."Symbols"]:SetText(skills["symbols"])
+            _G["PallyPowerFramePlayer"..i.."Symbols"]:SetTextColor(1,1,0.5)
             if (PallyPower_CanControl(name)) then
-                getglobal("PallyPowerFramePlayer"..i.."Name"):SetTextColor(1,1,1)
+                _G["PallyPowerFramePlayer"..i.."Name"]:SetTextColor(1,1,1)
             else
                 if (PallyPower_CheckRaidLeader(name)) then
-                    getglobal("PallyPowerFramePlayer"..i.."Name"):SetTextColor(0,1,0)
+                    _G["PallyPowerFramePlayer"..i.."Name"]:SetTextColor(0,1,0)
                 else
-                    getglobal("PallyPowerFramePlayer"..i.."Name"):SetTextColor(1,0,0)
+                    _G["PallyPowerFramePlayer"..i.."Name"]:SetTextColor(1,0,0)
                 end
             end
             for id = 0, 5 do
                 if (skills[id]) then
-                    getglobal("PallyPowerFramePlayer"..i.."Icon"..id):Show()
-                    getglobal("PallyPowerFramePlayer"..i.."Skill"..id):Show()
+                    _G["PallyPowerFramePlayer"..i.."Icon"..id]:Show()
+                    _G["PallyPowerFramePlayer"..i.."Skill"..id]:Show()
                     local txt = skills[id]["rank"];
                     if (skills[id]["talent"]+0 > 0) then txt = txt.."+"..skills[id]["talent"] end
-                    getglobal("PallyPowerFramePlayer"..i.."Skill"..id):SetText(txt)
+                    _G["PallyPowerFramePlayer"..i.."Skill"..id]:SetText(txt)
                 else
-                    getglobal("PallyPowerFramePlayer"..i.."Icon"..id):Hide()
-                    getglobal("PallyPowerFramePlayer"..i.."Skill"..id):Hide()
+                    _G["PallyPowerFramePlayer"..i.."Icon"..id]:Hide()
+                    _G["PallyPowerFramePlayer"..i.."Skill"..id]:Hide()
                 end
             end
             for id = 0, 7 do
                 if (PallyPower_Assignments[name]) then
-                    getglobal("PallyPowerFramePlayer"..i.."Class"..id.."Icon"):SetTexture(BlessingIcon[PallyPower_Assignments[name][id]])
+                    _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(BuffIcon[PallyPower_Assignments[name][id]])
                 else
-                    getglobal("PallyPowerFramePlayer"..i.."Class"..id.."Icon"):SetTexture(nil)
+                    _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(nil)
                 end
             end
             i = i + 1
@@ -262,9 +254,9 @@ function PallyPowerGrid_Update()
     PallyPowerFrame:SetHeight(14 + 24 + 56 + (numPallys*56) + 22 ) -- 14 from border, 24 from Title, 56 from space for class icons, 56 per paladin, 22 for Buttons at bottom
     for i = 1, 12 do
         if i <= numPallys then
-            getglobal("PallyPowerFramePlayer"..i):Show()
+            _G["PallyPowerFramePlayer"..i]:Show()
         else
-            getglobal("PallyPowerFramePlayer"..i):Hide()
+            _G["PallyPowerFramePlayer"..i]:Hide()
         end
     end
     end
@@ -288,10 +280,10 @@ function PallyPower_UpdateUI()
     if assign then
         for class = 0, 7 do
             if (assign[class] and assign[class] ~= -1) then
-                getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
-                getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
-                getglobal("PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
-                local btn = getglobal("PallyPowerBuffBarBuff"..BuffNum);
+                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
+                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
+                _G["PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"]:SetTexture(BuffIcon[assign[class]]);
+                local btn = _G["PallyPowerBuffBarBuff"..BuffNum];
                 btn.classID = class;
                 btn.buffID = assign[class];
                 btn.need = {};
@@ -336,12 +328,12 @@ function PallyPower_UpdateUI()
                     end
                 end
                 if ndead > 0 then
-                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed.." ("..ndead..")");
+                    _G["PallyPowerBuffBarBuff"..BuffNum.."Text"]:SetText(nneed.." ("..ndead..")");
                 else
-                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed);
+                    _G["PallyPowerBuffBarBuff"..BuffNum.."Text"]:SetText(nneed);
                 end
 
-                getglobal("PallyPowerBuffBarBuff"..BuffNum.."Time"):SetText(formatTime(next_expiration - GetTime()))
+                _G["PallyPowerBuffBarBuff"..BuffNum.."Time"]:SetText(formatTime(next_expiration - GetTime()))
 
                 if not (nneed > 0 or nhave > 0) then
                 else
@@ -362,7 +354,7 @@ function PallyPower_UpdateUI()
             end
         end
     for rest = BuffNum, 8 do
-        local btn = getglobal("PallyPowerBuffBarBuff"..rest);
+        local btn = _G["PallyPowerBuffBarBuff"..rest];
         btn:SetAttribute("spell", nil)
         btn:Hide();
     end
@@ -616,7 +608,7 @@ function PallyPowerGridButton_OnClick(self, btn, mouseBtn)
     _,_,pnum,class = string.find(self:GetName(), "PallyPowerFramePlayer(.+)Class(.+)");
     pnum = pnum + 0;
     class = class + 0;
-    pname = getglobal("PallyPowerFramePlayer"..pnum.."Name"):GetText()
+    pname = _G["PallyPowerFramePlayer"..pnum.."Name"]:GetText()
     if not PallyPower_CanControl(pname) then return false end
 
     if (mouseBtn=="RightButton") then
@@ -995,7 +987,7 @@ function PallyPowerGridButton_OnMouseWheel(self, arg1)
     _,_,pnum,class = string.find(self:GetName(), "PallyPowerFramePlayer(.+)Class(.+)");
     pnum = pnum + 0;
     class = class + 0;
-    pname = getglobal("PallyPowerFramePlayer"..pnum.."Name"):GetText()
+    pname = _G["PallyPowerFramePlayer"..pnum.."Name"]:GetText()
     if not PallyPower_CanControl(pname) then return false end
 
     if (arg1==-1) then  --mouse wheel down
