@@ -1,10 +1,10 @@
 PallyPower = {};
 PallyPower_Assignments = {};
 PP_PerUser = {
-	scalemain = 1,	-- corner of main window docked to
-	scalebar = 1,	-- corner menu window is docked from
-	scanfreq = 1,
-	scanperframe = 1,
+    scalemain = 1,	-- corner of main window docked to
+    scalebar = 1,	-- corner menu window is docked from
+    scanfreq = 1,
+    scanperframe = 1,
     smartbuffs = 0,
 }
 
@@ -277,14 +277,14 @@ function PallyPower_UpdateUI()
     if not initalized then PallyPower_ScanSpells() end
     -- Buff Bar
     PallyPowerBuffBar:SetScale(PP_PerUser.scalebar);
-    if GetNumGroupMembers() == 0 or not PP_IsPally() then
+    if not PP_IsPally() then
         PallyPowerBuffBar:Hide()
     else
         PallyPowerBuffBar:Show()
         PallyPowerBuffBarTitleText:SetText(format(PallyPower_BuffBarTitle, PP_Symbols));
-        BuffNum = 1
-        if PallyPower_Assignments[UnitName("player")] then
-            local assign = PallyPower_Assignments[UnitName("player")]
+        local BuffNum = 1
+        local assign = PallyPower_Assignments[UnitName("player")]
+        if assign then
             for class = 0, 7 do
                 if (assign[class] and assign[class] ~= -1) then
                     getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexture(PallyPower_ClassTexture[class]);
