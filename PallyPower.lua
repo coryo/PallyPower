@@ -314,15 +314,16 @@ function PallyPower_UpdateUI()
                             end
                             if stats["visible"] then
                                 if not stats[assign[class]] then
-                                    btn:SetAttribute("unit", stats["unitid"])
                                     if UnitIsDeadOrGhost(member) then
                                         ndead = ndead + 1;
                                         tinsert(btn.dead, stats["name"]);
                                     else
+                                        btn:SetAttribute("unit", stats["unitid"])
                                         nneed = nneed + 1
                                         tinsert(btn.need, stats["name"]);
                                     end
                                 else
+                                    btn:SetAttribute("unit", stats["unitid"])
                                     tinsert(btn.have, stats["name"]);
                                     nhave = nhave + 1
                                 end
@@ -802,19 +803,17 @@ end
 
 function PallyPower_ScanRaid()
     if not PP_IsPally() then return end
-
-    local queue = {}
-
     if not (PP_ScanInfo) then
+        PP_Scanners = {}
         PP_ScanInfo = {}
         if GetNumGroupMembers() > 0 and IsInRaid() then
             for i = 1, GetNumGroupMembers() do
-                tinsert(queue, "raid"..i)
+                tinsert(PP_Scanners, "raid"..i)
             end
         else
-            tinsert(queue, "player");
+            tinsert(PP_Scanners, "player");
             for i = 1, GetNumGroupMembers() do
-                tinsert(queue, "party"..i)
+                tinsert(PP_Scanners, "party"..i)
             end
         end
     end
@@ -823,8 +822,8 @@ function PallyPower_ScanRaid()
         tests = 1
     end
 
-    while queue[1] do
-        unit = queue[1]
+    while PP_Scanners[1] do
+        unit = PP_Scanners[1]
         local name=UnitName(unit)
         local class=UnitClass(unit)
         if ( name and class ) then
@@ -842,10 +841,10 @@ function PallyPower_ScanRaid()
             while UnitBuff(unit, j) do
                 local name, _, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
                 local txtID = PallyPower_getBuffID(name)
-                if txtID >= 0 and expiration > 0 then
+                if txtID >=0 and expiration > 0 then
                     PP_ScanInfo[cid][unit]["expiration"][txtID] = expiration
                 end
-                if txtID > 5 then
+                if txtID >5 then
                     txtID = txtID - 6
                 end
 
@@ -853,7 +852,7 @@ function PallyPower_ScanRaid()
                 j=j+1
             end
         end
-        tremove(queue, 1)
+        tremove(PP_Scanners, 1)
         tests = tests - 1
         PP_Debug("Scanning "..unit.." and "..tests.." remain");
         if (tests <= 0) then return end
