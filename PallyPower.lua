@@ -34,31 +34,29 @@ local BlessingIcon = {
 }
 
 local BuffIcon = {
-    --greater blessings
-    [0] = "Greater Blessing of Wisdom",
-    [1] = "Greater Blessing of Might",
-    [2] = "Greater Blessing of Salvation",
-    [3] = "Greater Blessing of Light",
-    [4] = "Greater Blessing of Kings",
-    [5] = "Greater Blessing of Sanctuary",
-    --lesser blessings
-    [6] = "Blessing of Wisdom",
-    [7] = "Blessing of Might",
-    [8] = "Blessing of Salvation",
-    [9] = "Blessing of Light",
-    [10] = "Blessing of Kings",
-    [11] = "Blessing of Sanctuary",
+    [0] = 135912, -- Greater Blessing of Wisdom
+    [1] = 135908, -- Greater Blessing of Might
+    [2] = 135910, -- Greater Blessing of Salvation
+    [3] = 135909, -- Greater Blessing of Light
+    [4] = 135993, -- Greater Blessing of Kings
+    [5] = 135911, -- Greater Blessing of Sanctuary
+    [6] = 135970, -- Blessing of Wisdom
+    [7] = 135906, -- Blessing of Might
+    [8] = 135967, -- Blessing of Salvation
+    [9] = 135943, -- Blessing of Light
+    [10] = 135995, -- Blessing of Kings
+    [11] = 136051, -- Blessing of Sanctuary
 }
 
-local PallyPower_ClassTexture = {
-    [0] = "Interface\\AddOns\\PallyPower\\Icons\\Warrior",
-    [1] = "Interface\\AddOns\\PallyPower\\Icons\\Rogue",
-    [2] = "Interface\\AddOns\\PallyPower\\Icons\\Priest",
-    [3] = "Interface\\AddOns\\PallyPower\\Icons\\Druid",
-    [4] = "Interface\\AddOns\\PallyPower\\Icons\\Paladin",
-    [5] = "Interface\\AddOns\\PallyPower\\Icons\\Hunter",
-    [6] = "Interface\\AddOns\\PallyPower\\Icons\\Mage",
-    [7] = "Interface\\AddOns\\PallyPower\\Icons\\Warlock",
+local PallyPower_classIDEnglishClass = {
+    [0] = "WARRIOR",
+    [1] = "ROGUE",
+    [2] = "PRIEST",
+    [3] = "DRUID",
+    [4] = "PALADIN",
+    [5] = "HUNTER",
+    [6] = "MAGE",
+    [7] = "WARLOCK",
 }
 
 
@@ -275,96 +273,100 @@ end
 
 function PallyPower_UpdateUI()
     if not initalized then PallyPower_ScanSpells() end
-    -- Buff Bar
+
     PallyPowerBuffBar:SetScale(PP_PerUser.scalebar);
+
     if not PP_IsPally() then
         PallyPowerBuffBar:Hide()
-    else
-        PallyPowerBuffBar:Show()
-        PallyPowerBuffBarTitleText:SetText(format(PallyPower_BuffBarTitle, PP_Symbols));
-        local BuffNum = 1
-        local assign = PallyPower_Assignments[UnitName("player")]
-        if assign then
-            for class = 0, 7 do
-                if (assign[class] and assign[class] ~= -1) then
-                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexture(PallyPower_ClassTexture[class]);
-                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
-                    local btn = getglobal("PallyPowerBuffBarBuff"..BuffNum);
-                    btn.classID = class;
-                    btn.buffID = assign[class];
-                    btn.need = {};
-                    btn.have = {};
-                    btn.range = {};
-                    btn.dead = {};
-                    -- Calculate number of people who need buff.
-                    local nneed = 0;
-                    local nhave = 0;
-                    local ndead = 0;
-                    local next_expiration = -1;
-                    if CurrentBuffs[class] then
-                        for member, stats in pairs(CurrentBuffs[class]) do
-                            local exp = stats["expiration"][btn.buffID]
+        return
+    end
 
-                            if exp and stats[assign[class]] and exp > 0 then
-                                if next_expiration < 0 then
-                                    next_expiration = exp
-                                elseif exp < next_expiration then
-                                    next_expiration = exp
-                                end
+    PallyPowerBuffBar:Show()
+    PallyPowerBuffBarTitleText:SetText(format(PallyPower_BuffBarTitle, PP_Symbols));
+    local BuffNum = 1
+    local assign = PallyPower_Assignments[UnitName("player")]
+    if assign then
+        for class = 0, 7 do
+            if (assign[class] and assign[class] ~= -1) then
+                getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
+                getglobal("PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"):SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
+                getglobal("PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
+                local btn = getglobal("PallyPowerBuffBarBuff"..BuffNum);
+                btn.classID = class;
+                btn.buffID = assign[class];
+                btn.need = {};
+                btn.have = {};
+                btn.range = {};
+                btn.dead = {};
+                -- Calculate number of people who need buff.
+                local nneed = 0;
+                local nhave = 0;
+                local ndead = 0;
+                local next_expiration = -1;
+                if CurrentBuffs[class] then
+                    for member, stats in pairs(CurrentBuffs[class]) do
+                        local exp = stats["expiration"][btn.buffID]
+
+                        if exp and stats[assign[class]] and exp > 0 then
+                            if next_expiration < 0 then
+                                next_expiration = exp
+                            elseif exp < next_expiration then
+                                next_expiration = exp
                             end
-                            if stats["visible"] then
-                                if not stats[assign[class]] then
-                                    if UnitIsDeadOrGhost(member) then
-                                        ndead = ndead + 1;
-                                        tinsert(btn.dead, stats["name"]);
-                                    else
-                                        btn:SetAttribute("unit", stats["unitid"])
-                                        nneed = nneed + 1
-                                        tinsert(btn.need, stats["name"]);
-                                    end
+                        end
+                        if stats["visible"] then
+                            if not stats[assign[class]] then
+                                if UnitIsDeadOrGhost(member) then
+                                    ndead = ndead + 1;
+                                    tinsert(btn.dead, stats["name"]);
                                 else
                                     btn:SetAttribute("unit", stats["unitid"])
-                                    tinsert(btn.have, stats["name"]);
-                                    nhave = nhave + 1
+                                    nneed = nneed + 1
+                                    tinsert(btn.need, stats["name"]);
                                 end
                             else
-                                tinsert(btn.range, stats["name"]);
+                                btn:SetAttribute("unit", stats["unitid"])
+                                tinsert(btn.have, stats["name"]);
                                 nhave = nhave + 1
                             end
-                        end
-                    end
-                    if ndead > 0 then
-                        getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed.." ("..ndead..")");
-                    else
-                        getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed);
-                    end
-
-                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."Time"):SetText(formatTime(next_expiration - GetTime()))
-
-                    if not (nneed > 0 or nhave > 0) then
-                    else
-                        BuffNum = BuffNum + 1
-                        if (nhave == 0) then
-                            btn:SetBackdropColor(1.0, 0.0, 0.0, 0.5);
-                        elseif (nneed > 0) then
-                            btn:SetBackdropColor(1.0, 1.0, 0.5, 0.5);
                         else
-                            btn:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
-                        end
-                        btn:SetAttribute("type", "spell");
-                        btn:SetAttribute("spell", BuffIcon[assign[class]])
-                        btn:Show();
+                            tinsert(btn.range, stats["name"]);
+                            nhave = nhave + 1
                         end
                     end
                 end
+                if ndead > 0 then
+                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed.." ("..ndead..")");
+                else
+                    getglobal("PallyPowerBuffBarBuff"..BuffNum.."Text"):SetText(nneed);
+                end
+
+                getglobal("PallyPowerBuffBarBuff"..BuffNum.."Time"):SetText(formatTime(next_expiration - GetTime()))
+
+                if not (nneed > 0 or nhave > 0) then
+                else
+                    BuffNum = BuffNum + 1
+                    if (nhave == 0) then
+                        btn:SetBackdropColor(1.0, 0.0, 0.0, 0.5);
+                    elseif (nneed > 0) then
+                        btn:SetBackdropColor(1.0, 1.0, 0.5, 0.5);
+                    else
+                        btn:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
+                    end
+                    btn:SetAttribute("type", "spell");
+                    local spell = GetSpellBookItemName(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL)
+                    btn:SetAttribute("spell", spell)
+                    btn:Show();
+                    end
+                end
             end
-        for rest = BuffNum, 8 do
-            local btn = getglobal("PallyPowerBuffBarBuff"..rest);
-            btn:SetAttribute("spell", nil)
-            btn:Hide();
         end
-        PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
+    for rest = BuffNum, 8 do
+        local btn = getglobal("PallyPowerBuffBarBuff"..rest);
+        btn:SetAttribute("spell", nil)
+        btn:Hide();
     end
+    PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
 end
 
 function PallyPower_ScanSpells()
@@ -839,16 +841,16 @@ function PallyPower_ScanRaid()
 
             local j=1
             while UnitBuff(unit, j) do
-                local name, _, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
-                local txtID = PallyPower_getBuffID(name)
-                if txtID >=0 and expiration > 0 then
-                    PP_ScanInfo[cid][unit]["expiration"][txtID] = expiration
+                local _, texture, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
+                local textureID = PallyPower_getBuffID(texture)
+                if textureID >= 0 and expiration > 0 then
+                    PP_ScanInfo[cid][unit]["expiration"][textureID] = expiration
                 end
-                if txtID >5 then
-                    txtID = txtID - 6
+                if textureID > 5 then
+                    textureID = textureID - 6
                 end
 
-                PP_ScanInfo[cid][unit][txtID] = true
+                PP_ScanInfo[cid][unit][textureID] = true
                 j=j+1
             end
         end

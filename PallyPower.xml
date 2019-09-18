@@ -712,7 +712,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass0" file="Interface\AddOns\PallyPower\Icons\Warrior" hidden="false">
+				<Texture name="$parentClass0" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0" right="0.25" top="0" bottom="0.25" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -724,7 +725,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass1" file="Interface\AddOns\PallyPower\Icons\Rogue" hidden="false">
+				<Texture name="$parentClass1" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.49609375" right="0.7421875" top="0" bottom="0.25" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -736,7 +738,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass2" file="Interface\AddOns\PallyPower\Icons\Priest" hidden="false">
+				<Texture name="$parentClass2" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.49609375" right="0.7421875" top="0.25" bottom="0.5" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -748,7 +751,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass3" file="Interface\AddOns\PallyPower\Icons\Druid" hidden="false">
+				<Texture name="$parentClass3" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.7421875" right="0.98828125" top="0" bottom="0.25" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -760,7 +764,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass4" file="Interface\AddOns\PallyPower\Icons\Paladin" hidden="false">
+				<Texture name="$parentClass4" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0" right="0.25" top="0.5" bottom="0.75" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -772,7 +777,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass5" file="Interface\AddOns\PallyPower\Icons\Hunter" hidden="false">
+				<Texture name="$parentClass5" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0" right="0.25" top="0.25" bottom="0.5" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -784,7 +790,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass6" file="Interface\AddOns\PallyPower\Icons\Mage" hidden="false">
+				<Texture name="$parentClass6" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.25" right="0.49609375" top="0" bottom="0.25" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -796,7 +803,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass7" file="Interface\AddOns\PallyPower\Icons\Warlock" hidden="false">
+				<Texture name="$parentClass7" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.7421875" right="0.98828125" top="0.25" bottom="0.5" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
