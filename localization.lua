@@ -181,4 +181,69 @@ elseif (GetLocale() == "frFR") then
     PALLYPOWER_CLEAR = "Nettoyer";
     PALLYPOWER_REFRESH = "Rafraichir";
 
+elseif (GetLocale() == "zhCN") then
+
+    -- by Qcat
+    PallyPower_BlessingID[0] = "智慧";
+    PallyPower_BlessingID[1] = "力量";
+    PallyPower_BlessingID[2] = "拯救";
+    PallyPower_BlessingID[3] = "光明";
+    PallyPower_BlessingID[4] = "王者";
+    PallyPower_BlessingID[5] = "庇护";
+
+    PallyPower_BlessingTalentSearch = "强化(.*)祝福";
+    PallyPower_BlessingSpellSearch = "强效(.*)祝福";
+    PallyPower_Rank1 = "等级 1"
+    PallyPower_RankSearch = "等级 (.*)"
+    PallyPower_Symbol = "王者印记"
+
+    -- _,class = UnitClass("player") returns....
+    PallyPower_Paladin = "PALADIN"
+
+    -- Used... ClassID .. ": Blessing of "..BlessingID
+    PallyPower_BuffFrameText = ": 祝福: "
+    PallyPower_Have = "已有: "
+    PallyPower_Need = "需要: "
+    PallyPower_NotHere = "Not here: "
+    PallyPower_Dead = "死亡: "
+
+    PallyPower_BuffBarTitle = "Pally Buffs (%d)"
+
+    --- By Lines... Keep People the same, feel free to add yourself in the _Credits3 line if your localizing
+    --- And feel free to add a friend or two to special thanks
+    PallyPower_Credits1 = "Pally Power - by Aznamir"
+    PallyPower_Credits2 = "版本 "..PallyPower_Version
+    PallyPower_Credits3 = ""
+    PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
+    PallyPower_Credits5 = "特别感谢: Gnarf, Blackoz"
+    PallyPower_Credits6 = "Classic（官方怀旧）由 Starhammer-Stalagg 更新"
+
+    -- Buff name, Class Name
+    PallyPower_CouldntFind = "无法找到buff: %s 职业: %s!"
+
+    -- Buff name, Class name, Person Name
+    PallyPower_Casting = "正在施放 %s 给 %s (%s)"
+    -- Reporting
+    PallyPower_Assignments1 = "--- 骑士祝福分配 ---"
+    PallyPower_Assignments2 = "--- 结束 ---"
+
+    PallyPower_ClassID = { };
+    PallyPower_ClassID[0] = "战士";
+    PallyPower_ClassID[1] = "潜行者";
+    PallyPower_ClassID[2] = "牧师";
+    PallyPower_ClassID[3] = "德鲁伊";
+    PallyPower_ClassID[4] = "圣骑士";
+    PallyPower_ClassID[5] = "猎人";
+    PallyPower_ClassID[6] = "法师";
+    PallyPower_ClassID[7] = "术士";
+
+    --XML
+    PALLYPOWER_CLEAR = "清除";
+    PALLYPOWER_REFRESH = "刷新";
+    PALLYPOWER_OPTIONS = "选项";
+    PALLYPOWER_OPTIONS_TITLE = "Pally Power 选项";
+    PALLYPOWER_OPTIONS_SCAN = "扫描频率（秒）:";
+    PALLYPOWER_OPTIONS_SCAN2 = "每帧轮询: ";
+    PALLYPOWER_OPTIONS_FEEDBACK_CHAT = "在聊天中显示反馈信息";
+    PALLYPOWER_OPTIONS_SMARTBUFFS = "智能Buffs";
 end
