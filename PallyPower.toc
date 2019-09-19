@@ -6,6 +6,7 @@
 ## SavedVariablesPerCharacter: PP_PerUser,PallyPower_Assignments
 
 libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 libs\LibClassicDurations\LibClassicDurations.xml
 
 PallyPower.xml
