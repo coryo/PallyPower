@@ -5,7 +5,7 @@ PP_PerUser = {
     scalebar = 1,	-- corner menu window is docked from
     scanfreq = 1,
     scanperframe = 1,
-    smartbuffs = 0,
+    smartbuffs = false,
 }
 
 local LCD = LibStub("LibClassicDurations")
