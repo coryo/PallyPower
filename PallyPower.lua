@@ -11,9 +11,6 @@ PP_PerUser = {
 local LCD = LibStub("LibClassicDurations")
 LCD:Register("PallyPower") -- tell library it's being used and should start working
 
-BINDING_HEADER_PALLYPOWER = "Pally Power";
-BINDING_NAME_PALLYPOWER_TOGGLE = "Toggle Buff Bar";
-BINDING_NAME_PALLYPOWER_REPORT = "Report Assignments";
 PP_PREFIX = "PLPWR";
 C_ChatInfo.RegisterAddonMessagePrefix(PP_PREFIX)
 

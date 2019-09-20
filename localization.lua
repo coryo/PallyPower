@@ -1,6 +1,9 @@
 PallyPower_Version = "1.067"
 SLASH_PALLYPOWER1 = "/pp"
 SLASH_PALLYPOWER2 = "/pallypower"
+BINDING_HEADER_PALLYPOWER = "Pally Power";
+BINDING_NAME_PALLYPOWER_TOGGLE = "Toggle Buff Bar";
+BINDING_NAME_PALLYPOWER_REPORT = "Report Assignments";
 
 PallyPower_BlessingID = { };
 PallyPower_BlessingID[0] = "Wisdom";
