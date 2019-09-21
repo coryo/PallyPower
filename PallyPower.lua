@@ -64,6 +64,7 @@ function PallyPower_OnLoad(self)
     -- self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH");
     self:RegisterEvent("PLAYER_LOGIN");
     self:RegisterEvent("GROUP_ROSTER_UPDATE");
+    self:RegisterEvent("PLAYER_REGEN_ENABLED");
     self:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
     self:SetScale(1);
     SlashCmdList["PALLYPOWER"] = function(msg)
@@ -116,10 +117,11 @@ function PallyPower_OnEvent(self, event, ...)
 
     if event == "PLAYER_LOGIN" then PallyPower_UpdateUI() end
 
-    if event == "GROUP_ROSTER_UPDATE" then
+    if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_REGEN_ENABLED" then
         PallyPower_ScanRaid()
         PallyPower_UpdateUI()
     end
+
 end
 
 
@@ -263,14 +265,20 @@ end
 function PallyPower_UpdateUI()
     if not initalized then PallyPower_ScanSpells() end
 
-    PallyPowerBuffBar:SetScale(PP_PerUser.scalebar);
+    local inLockdown = InCombatLockdown()
 
     if not PP_IsPally() then
-        PallyPowerBuffBar:Hide()
+        if not inLockdown then
+            PallyPowerBuffBar:Hide()
+        end
         return
     end
 
-    PallyPowerBuffBar:Show()
+    if not inLockdown then
+        PallyPowerBuffBar:SetScale(PP_PerUser.scalebar);
+        PallyPowerBuffBar:Show()
+    end
+
     PallyPowerBuffBarTitleText:SetText(format(PallyPower_BuffBarTitle, PP_Symbols));
     local BuffNum = 1
     local assign = PallyPower_Assignments[UnitName("player")]
@@ -309,12 +317,16 @@ function PallyPower_UpdateUI()
                                     ndead = ndead + 1;
                                     tinsert(btn.dead, stats["name"]);
                                 else
-                                    btn:SetAttribute("unit", stats["unitid"])
+                                    if not inLockdown then
+                                        btn:SetAttribute("unit", stats["unitid"])
+                                    end
                                     nneed = nneed + 1
                                     tinsert(btn.need, stats["name"]);
                                 end
                             else
-                                btn:SetAttribute("unit", stats["unitid"])
+                                if not inLockdown then
+                                    btn:SetAttribute("unit", stats["unitid"])
+                                end
                                 tinsert(btn.have, stats["name"]);
                                 nhave = nhave + 1
                             end
@@ -342,20 +354,25 @@ function PallyPower_UpdateUI()
                     else
                         btn:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
                     end
-                    btn:SetAttribute("type", "spell");
-                    local spell = GetSpellBookItemName(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL)
-                    btn:SetAttribute("spell", spell)
-                    btn:Show();
+                    if not inLockdown then
+                        btn:SetAttribute("type", "spell");
+                        local spell = GetSpellBookItemName(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL)
+                        btn:SetAttribute("spell", spell)
+                        btn:Show();
                     end
                 end
             end
         end
-    for rest = BuffNum, 8 do
-        local btn = _G["PallyPowerBuffBarBuff"..rest];
-        btn:SetAttribute("spell", nil)
-        btn:Hide();
     end
-    PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
+
+    if not inLockdown then
+        for rest = BuffNum, 8 do
+            local btn = _G["PallyPowerBuffBarBuff"..rest];
+            btn:SetAttribute("spell", nil)
+            btn:Hide();
+        end
+        PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
+    end
 end
 
 function PallyPower_ScanSpells()
@@ -996,9 +1013,9 @@ end
 
 
 function PallyPower_BarToggle()
-    if GetNumGroupMembers() == 0 or not PP_IsPally() then
-        PallyPower_ShowFeedback(" Not in raid or not a paladin", 0.5, 1, 1, 1)
-    else
+    if not PP_IsPally() then
+        PallyPower_ShowFeedback(" Not a paladin", 0.5, 1, 1, 1)
+    elseif not InCombatLockdown() then
         if PallyPowerBuffBar:IsVisible() then
             PallyPowerBuffBar:Hide()
             PallyPower_ShowFeedback(" Bar hidden", 0.5, 1, 1, 1)
