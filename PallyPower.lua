@@ -833,9 +833,9 @@ function PallyPower_ScanRaid()
     while PP_Scanners[1] do
         unit = PP_Scanners[1]
         local name=UnitName(unit)
-        local class=UnitClass(unit)
+        local class, englishClass =UnitClass(unit)
         if ( name and class ) then
-            local cid = PallyPower_getClassID(class)
+            local cid = PallyPower_getClassID(englishClass)
             if not PP_ScanInfo[cid] then
                 PP_ScanInfo[cid] = {}
             end
@@ -873,7 +873,7 @@ end
 
 
 function PallyPower_getClassID(class)
-    for id, name in pairs(PallyPower_ClassID) do
+    for id, name in pairs(PallyPower_classIDEnglishClass) do
         if (name==class) then
             return id
         end

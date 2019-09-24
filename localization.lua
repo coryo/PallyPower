@@ -68,7 +68,66 @@ PALLYPOWER_OPTIONS_SCAN = "Scan Frequency (seconds):";
 PALLYPOWER_OPTIONS_SCAN2 = "Poll Per Frame: ";
 PALLYPOWER_OPTIONS_FEEDBACK_CHAT = "Show feedback in chat";
 PALLYPOWER_OPTIONS_SMARTBUFFS = "Smart Buffs";
-if (GetLocale() == "deDE") then
+if (GetLocale() == "ruRU") then
+	-- by Nextorus @ EU-Alexstrasza (nexter@walsweer.de)
+    PallyPower_BlessingID[0] = "мудрости";
+    PallyPower_BlessingID[1] = "могущества";
+    PallyPower_BlessingID[2] = "спасения";
+    PallyPower_BlessingID[3] = "Света";
+    PallyPower_BlessingID[4] = "королей";
+    PallyPower_BlessingID[5] = "неприкосновенности";
+    
+
+    PallyPower_BlessingTalentSearch = "Улучшенное благословение (.*)";
+    PallyPower_BlessingSpellSearch = "Великое благословение (.*)";
+    PallyPower_Rank1 = "Уровень 1"
+    PallyPower_RankSearch = "Уровень (.*)"
+    PallyPower_Symbol = "Символ королей"
+
+    -- _,class = UnitClass("player") returns....
+    PallyPower_Paladin = "PALADIN";
+
+    -- Used... ClassID .. ": Segen des "..BlessingID
+    PallyPower_BuffFrameText = ": Благословение "
+    PallyPower_Have = "Have: "
+    PallyPower_Need = "Need: "
+    PallyPower_NotHere = "Not Here: "
+    PallyPower_Dead = "Dead: "
+
+    PallyPower_BuffBarTitle = "Pally Buffs (%d)";
+
+    --- By Lines... Keep People the same, feel free to add yourself in the _Credits3 line if your localizing
+    --- And feel free to add a friend or two to special thanks
+    PallyPower_Credits1 = "Pally Power - by Aznamir"
+    PallyPower_Credits2 = "Version "..PallyPower_Version
+    PallyPower_Credits3 = "Палдосий"
+    PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
+    PallyPower_Credits5 = "Special Thanks: Gnarf, Blackoz"
+    PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg"
+
+    -- Buff name, Class Name
+    PallyPower_CouldntFind = "Couldn't find a target for %s on %s!"
+
+    -- Buff name, Class name, Person Name
+    PallyPower_Casting = "Casting %s on %s (%s)"
+    -- Reporting
+    PallyPower_Assignments1 = "--- Paladin assignments ---"
+    PallyPower_Assignments2 = "--- end of assignments ---"
+
+    PallyPower_ClassID = { };
+    PallyPower_ClassID[0] = "Воин";
+    PallyPower_ClassID[1] = "Разбойник";
+    PallyPower_ClassID[2] = "Жрец";
+    PallyPower_ClassID[3] = "Друид";
+    PallyPower_ClassID[4] = "Паладин";
+    PallyPower_ClassID[5] = "Охотник";
+    PallyPower_ClassID[6] = "Маг";
+    PallyPower_ClassID[7] = "Чернокнижник";
+
+    -- XML Localization
+    PALLYPOWER_CLEAR = "Clear";
+    PALLYPOWER_REFRESH = "Refresh";
+elseif (GetLocale() == "deDE") then
 	-- by Nextorus @ EU-Alexstrasza (nexter@walsweer.de)
     PallyPower_BlessingID[0] = "Weisheit";
     PallyPower_BlessingID[1] = "Macht";
