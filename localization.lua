@@ -58,6 +58,7 @@ PallyPower_ClassID[4] = "Paladin";
 PallyPower_ClassID[5] = "Hunter";
 PallyPower_ClassID[6] = "Mage";
 PallyPower_ClassID[7] = "Warlock";
+PallyPower_ClassID[8] = "Pet";
 
 --XML
 PALLYPOWER_CLEAR = "Clear";
@@ -76,7 +77,7 @@ if (GetLocale() == "ruRU") then
     PallyPower_BlessingID[3] = "Света";
     PallyPower_BlessingID[4] = "королей";
     PallyPower_BlessingID[5] = "неприкосновенности";
-    
+
 
     PallyPower_BlessingTalentSearch = "Улучшенное благословение (.*)";
     PallyPower_BlessingSpellSearch = "Великое благословение (.*)";

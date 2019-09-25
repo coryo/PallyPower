@@ -46,6 +46,7 @@ local PallyPower_classIDEnglishClass = {
     [5] = "HUNTER",
     [6] = "MAGE",
     [7] = "WARLOCK",
+    [8] = "PET",
 }
 
 
@@ -171,7 +172,7 @@ function PallyPower_Report()
         list[4]=0;
         list[5]=0;
         PP_Debug(list[0]);
-        for id = 0, 7 do
+        for id = 0, 8 do
             local bid = PallyPower_Assignments[name][id]
             if bid >= 0 then
                 list[bid] = list[bid] + 1
@@ -240,7 +241,7 @@ function PallyPowerGrid_Update()
                     _G["PallyPowerFramePlayer"..i.."Skill"..id]:Hide()
                 end
             end
-            for id = 0, 7 do
+            for id = 0, 8 do
                 if (PallyPower_Assignments[name]) then
                     _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(BuffIcon[PallyPower_Assignments[name][id]])
                 else
@@ -283,10 +284,18 @@ function PallyPower_UpdateUI()
     local BuffNum = 1
     local assign = PallyPower_Assignments[UnitName("player")]
     if assign then
-        for class = 0, 7 do
+        for class = 0, 8 do
             if (assign[class] and assign[class] ~= -1) then
-                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
-                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
+
+                local classIconFrame = _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]
+                if class < 8 then
+                    classIconFrame:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
+                    classIconFrame:SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
+                else
+                    classIconFrame:SetTexture(132267); -- aspect of the pack icon for pets
+                    classIconFrame:SetTexCoord(0, 1, 0, 1)
+                end
+
                 _G["PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"]:SetTexture(BuffIcon[assign[class]]);
                 local btn = _G["PallyPowerBuffBarBuff"..BuffNum];
                 btn.classID = class;
@@ -366,7 +375,7 @@ function PallyPower_UpdateUI()
     end
 
     if not inLockdown then
-        for rest = BuffNum, 8 do
+        for rest = BuffNum, 9 do
             local btn = _G["PallyPowerBuffBarBuff"..rest];
             btn:SetAttribute("spell", nil)
             btn:Hide();
@@ -483,7 +492,7 @@ function PallyPower_SendSelf()
         end
     end
     msg = msg .. "@"
-    for id=0,7 do
+    for id=0,8 do
         if (not PallyPower_Assignments[UnitName("player")]) or (not PallyPower_Assignments[UnitName("player")][id]) or PallyPower_Assignments[UnitName("player")][id] == -1 then
             msg = msg .. "n"
         else
@@ -519,7 +528,7 @@ function PallyPower_ParseMessage(sender, msg)
                 end
             end
             if assign then
-                for id = 0,7 do
+                for id = 0, 8 do
                     tmp = string.sub(assign, id+1, id+1)
                     if (tmp == "n" or tmp == "") then tmp = -1 end
                     PallyPower_Assignments[sender][id] = tmp + 0
@@ -541,7 +550,7 @@ function PallyPower_ParseMessage(sender, msg)
             if (not(name==sender)) and (not PallyPower_CheckRaidLeader(sender)) then return false end
             if (not PallyPower_Assignments[name]) then PallyPower_Assignments[name] = {} end
             skill=skill+0
-            for class=0, 7 do
+            for class=0, 8 do
                 PallyPower_Assignments[name][class] = skill;
             end
             PallyPower_UpdateUI()
@@ -668,7 +677,7 @@ function PallyPower_PerformCycleBackwards(name, class)
     end
 
     if shift then
-        for test=0, 7 do
+        for test=0, 8 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN "..name.." "..cur)
@@ -706,7 +715,7 @@ function PallyPower_PerformCycle(name, class)
     if (cur==6) then cur=-1 end
 
     if shift then
-        for test = 0, 7 do
+        for test = 0, 8 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN "..name.." "..cur)
@@ -816,12 +825,12 @@ function PallyPower_ScanRaid()
         PP_ScanInfo = {}
         if GetNumGroupMembers() > 0 and IsInRaid() then
             for i = 1, GetNumGroupMembers() do
-                tinsert(PP_Scanners, "raid"..i)
+                tinsert(PP_Scanners, {"raid", i})
             end
         else
-            tinsert(PP_Scanners, "player");
+            tinsert(PP_Scanners, {"player", 0});
             for i = 1, GetNumGroupMembers() do
-                tinsert(PP_Scanners, "party"..i)
+                tinsert(PP_Scanners, {"party", i})
             end
         end
     end
@@ -831,44 +840,66 @@ function PallyPower_ScanRaid()
     end
 
     while PP_Scanners[1] do
-        unit = PP_Scanners[1]
-        local name=UnitName(unit)
-        local class, englishClass =UnitClass(unit)
-        if ( name and class ) then
-            local cid = PallyPower_getClassID(englishClass)
-            if not PP_ScanInfo[cid] then
-                PP_ScanInfo[cid] = {}
-            end
-            PP_ScanInfo[cid][unit] = {};
-            PP_ScanInfo[cid][unit]["name"] = name;
-            PP_ScanInfo[cid][unit]["unitid"] = unit;
-            PP_ScanInfo[cid][unit]["visible"] = UnitIsVisible(unit);
-            PP_ScanInfo[cid][unit]["expiration"] = {};
-
-            local j=1
-            while UnitBuff(unit, j) do
-                local _, texture, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
-                local textureID = PallyPower_getBuffID(texture)
-                if textureID >= 0 and expiration > 0 then
-                    PP_ScanInfo[cid][unit]["expiration"][textureID] = expiration
+        local groupType, groupIndex = unpack(PP_Scanners[1])
+        local unitID = groupType
+        if groupIndex > 0 then
+            unitID = unitID..groupIndex
+        end
+        local name = UnitName(unitID)
+        local class, englishClass = UnitClass(unitID)
+        if (name and class) then
+            local classID = PallyPower_getClassID(englishClass)
+            if not PP_ScanInfo[classID] then PP_ScanInfo[classID] = {} end
+            PP_ScanInfo[classID][unitID] = PallyPower_getUnitInfo(unitID);
+            if classID == 5 then    -- hunters
+                local petUnitID = groupType.."pet"..groupIndex
+                local pet_name = UnitName(petUnitID)
+                if pet_name then
+                    local classID = 8
+                    if not PP_ScanInfo[classID] then PP_ScanInfo[classID] = {} end
+                    PP_ScanInfo[classID][petUnitID] = PallyPower_getUnitInfo(petUnitID);
                 end
-                if textureID > 5 then
-                    textureID = textureID - 6
-                end
-
-                PP_ScanInfo[cid][unit][textureID] = true
-                j=j+1
+            elseif classID == 7 then    -- warlocks
+                -- buffing phase shifted imps is an issue
+                -- shouldn't really be necessary to include warlock pets
             end
         end
         tremove(PP_Scanners, 1)
         tests = tests - 1
-        PP_Debug("Scanning "..unit.." and "..tests.." remain");
+        PP_Debug("Scanning "..unitID.." and "..tests.." remain");
         if (tests <= 0) then return end
     end
     CurrentBuffs = PP_ScanInfo
     PP_ScanInfo = nil
     PP_NextScan = PP_PerUser.scanfreq
     PallyPower_ScanInventory()
+end
+
+
+function PallyPower_getUnitInfo(unitID)
+    local info = {}
+
+    info["unitid"] = unitID;
+    info["name"] = UnitName(unitID);
+    info["visible"] = UnitIsVisible(unitID);
+    info["expiration"] = {};
+
+    local j = 1;
+    local name, texture, _, _, _, expiration =  LCD:UnitAura(unitID, j, "HELPFUL")
+    while name do
+        local textureID = PallyPower_getBuffID(texture)
+        if textureID >= 0 and expiration > 0 then
+            info["expiration"][textureID] = expiration
+        end
+        if textureID > 5 then
+            textureID = textureID - 6
+        end
+
+        info[textureID] = true
+        j=j+1
+        name, texture, _, _, _, expiration =  LCD:UnitAura(unitID, j, "HELPFUL")
+    end
+    return info;
 end
 
 
