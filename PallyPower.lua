@@ -343,7 +343,8 @@ function PallyPower_UpdateUI()
                 btn.dead = {};
 
                 if not inLockdown then
-                    btn:SetAttribute("spell", nil)
+                    btn:SetAttribute("spell-buff1", nil)
+                    btn:SetAttribute("spell-buff2", nil)
                     btn:SetAttribute("unit", nil)
                 end
 
@@ -427,8 +428,8 @@ function PallyPower_UpdateUI()
     if not inLockdown then
         for rest = BuffNum, 9 do
             local btn = _G["PallyPowerBuffBarBuff"..rest];
-            btn:SetAttribute("spell", nil)
-            btn:SetAttribute("unit", nil)
+            btn:SetAttribute("spell-buff1", nil)
+            btn:SetAttribute("spell-buff2", nil)
             btn:Hide();
         end
         PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
