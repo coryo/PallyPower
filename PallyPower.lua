@@ -304,6 +304,12 @@ function PallyPower_UpdateUI()
                 btn.have = {};
                 btn.range = {};
                 btn.dead = {};
+
+                if not inLockdown then
+                    btn:SetAttribute("spell", nil)
+                    btn:SetAttribute("unit", nil)
+                end
+
                 -- Calculate number of people who need buff.
                 local nneed = 0;
                 local nhave = 0;
@@ -320,6 +326,9 @@ function PallyPower_UpdateUI()
                                 next_expiration = exp
                             end
                         end
+
+                        local currentUnit = btn:GetAttribute("unit")
+
                         if stats["visible"] then
                             if not stats[assign[class]] then
                                 if UnitIsDeadOrGhost(member) then
@@ -333,7 +342,7 @@ function PallyPower_UpdateUI()
                                     tinsert(btn.need, stats["name"]);
                                 end
                             else
-                                if not inLockdown then
+                                if not inLockdown and currentUnit == nil then
                                     btn:SetAttribute("unit", stats["unitid"])
                                 end
                                 tinsert(btn.have, stats["name"]);
@@ -378,6 +387,7 @@ function PallyPower_UpdateUI()
         for rest = BuffNum, 9 do
             local btn = _G["PallyPowerBuffBarBuff"..rest];
             btn:SetAttribute("spell", nil)
+            btn:SetAttribute("unit", nil)
             btn:Hide();
         end
         PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
