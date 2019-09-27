@@ -21,21 +21,57 @@ local PP_ScanInfo = nil
 local PP_NextScan = PP_PerUser.scanfreq
 local CurrentBuffs = {};
 
-
-local BuffIcon = {
-    [0] = 135912, -- Greater Blessing of Wisdom
-    [1] = 135908, -- Greater Blessing of Might
-    [2] = 135910, -- Greater Blessing of Salvation
-    [3] = 135909, -- Greater Blessing of Light
-    [4] = 135993, -- Greater Blessing of Kings
-    [5] = 135911, -- Greater Blessing of Sanctuary
-    [6] = 135970, -- Blessing of Wisdom
-    [7] = 135906, -- Blessing of Might
-    [8] = 135967, -- Blessing of Salvation
-    [9] = 135943, -- Blessing of Light
-    [10] = 135995, -- Blessing of Kings
-    [11] = 136051, -- Blessing of Sanctuary
+local spellInfo = {
+    [0] = {
+        ["spellId"] = {19742, 19850, 19852, 19853, 19854, 25290},
+        ["icon"] = 135912,   -- Greater Blessing of Wisdom
+    },
+    [1] = {
+        ["spellId"] = {19740, 19834, 19835, 19836, 19837, 19838, 25291},
+        ["icon"] = 135908,   -- Greater Blessing of Might
+    },
+    [2] = {
+        ["spellId"] = {1038},
+        ["icon"] = 135910,   -- Greater Blessing of Salvation
+    },
+    [3] = {
+        ["spellId"] = {19977, 19978, 19979},
+        ["icon"] = 135909,   -- Greater Blessing of Light
+    },
+    [4] = {
+        ["spellId"] = {20217},
+        ["icon"] = 135993,   -- Greater Blessing of Kings
+    },
+    [5] = {
+        ["spellId"] = {20911, 20912, 20913, 20914},
+        ["icon"] = 135911,   -- Greater Blessing of Sanctuary
+    },
+    [6] = {
+        ["spellId"] = {25894, 25918},
+        ["icon"] = 135970,   -- Blessing of Wisdom
+    },
+    [7] = {
+        ["spellId"] = {25782, 25916},
+        ["icon"] = 135906,   -- Blessing of Might
+    },
+    [8] = {
+        ["spellId"] = {25895},
+        ["icon"] = 135967,   -- Blessing of Salvation
+    },
+    [9] = {
+        ["spellId"] = {25890},
+        ["icon"] = 135943,   -- Blessing of Light
+    },
+    [10] = {
+        ["spellId"] = {25898},
+        ["icon"] = 135995,   -- Blessing of Kings
+    },
+    [11] = {
+        ["spellId"] = {25899},
+        ["icon"] = 136051,   -- Blessing of Sanctuary
+    }
 }
+
 
 local PallyPower_classIDEnglishClass = {
     [0] = "WARRIOR",
@@ -46,6 +82,7 @@ local PallyPower_classIDEnglishClass = {
     [5] = "HUNTER",
     [6] = "MAGE",
     [7] = "WARLOCK",
+    [8] = "PET",
 }
 
 
@@ -171,7 +208,7 @@ function PallyPower_Report()
         list[4]=0;
         list[5]=0;
         PP_Debug(list[0]);
-        for id = 0, 7 do
+        for id = 0, 8 do
             local bid = PallyPower_Assignments[name][id]
             if bid >= 0 then
                 list[bid] = list[bid] + 1
@@ -240,9 +277,10 @@ function PallyPowerGrid_Update()
                     _G["PallyPowerFramePlayer"..i.."Skill"..id]:Hide()
                 end
             end
-            for id = 0, 7 do
-                if (PallyPower_Assignments[name]) then
-                    _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(BuffIcon[PallyPower_Assignments[name][id]])
+            for id = 0, 8 do
+                local info = spellInfo[PallyPower_Assignments[name][id]]
+                if (PallyPower_Assignments[name] and info) then
+                    _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(info["icon"])
                 else
                     _G["PallyPowerFramePlayer"..i.."Class"..id.."Icon"]:SetTexture(nil)
                 end
@@ -283,11 +321,19 @@ function PallyPower_UpdateUI()
     local BuffNum = 1
     local assign = PallyPower_Assignments[UnitName("player")]
     if assign then
-        for class = 0, 7 do
+        for class = 0, 8 do
             if (assign[class] and assign[class] ~= -1) then
-                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
-                _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]:SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
-                _G["PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"]:SetTexture(BuffIcon[assign[class]]);
+
+                local classIconFrame = _G["PallyPowerBuffBarBuff"..BuffNum.."ClassIcon"]
+                if class < 8 then
+                    classIconFrame:SetTexture("Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES");
+                    classIconFrame:SetTexCoord(unpack(CLASS_ICON_TCOORDS[PallyPower_classIDEnglishClass[class]]))
+                else
+                    classIconFrame:SetTexture(132267); -- aspect of the pack icon for pets
+                    classIconFrame:SetTexCoord(0, 1, 0, 1)
+                end
+
+                _G["PallyPowerBuffBarBuff"..BuffNum.."BuffIcon"]:SetTexture(spellInfo[assign[class]]["icon"]);
                 local btn = _G["PallyPowerBuffBarBuff"..BuffNum];
                 btn.classID = class;
                 btn.buffID = assign[class];
@@ -295,6 +341,13 @@ function PallyPower_UpdateUI()
                 btn.have = {};
                 btn.range = {};
                 btn.dead = {};
+
+                if not inLockdown then
+                    btn:SetAttribute("spell-buff1", nil)
+                    btn:SetAttribute("spell-buff2", nil)
+                    btn:SetAttribute("unit", nil)
+                end
+
                 -- Calculate number of people who need buff.
                 local nneed = 0;
                 local nhave = 0;
@@ -311,6 +364,9 @@ function PallyPower_UpdateUI()
                                 next_expiration = exp
                             end
                         end
+
+                        local currentUnit = btn:GetAttribute("unit")
+
                         if stats["visible"] then
                             if not stats[assign[class]] then
                                 if UnitIsDeadOrGhost(member) then
@@ -324,7 +380,7 @@ function PallyPower_UpdateUI()
                                     tinsert(btn.need, stats["name"]);
                                 end
                             else
-                                if not inLockdown then
+                                if not inLockdown and currentUnit == nil then
                                     btn:SetAttribute("unit", stats["unitid"])
                                 end
                                 tinsert(btn.have, stats["name"]);
@@ -356,8 +412,12 @@ function PallyPower_UpdateUI()
                     end
                     if not inLockdown then
                         btn:SetAttribute("type", "spell");
-                        local spell = GetSpellBookItemName(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL)
-                        btn:SetAttribute("spell", spell)
+                        btn:SetAttribute("*helpbutton1", "buff1")
+                        btn:SetAttribute("*helpbutton2", "buff2")
+                        local buff1, rank, _, _, _, _, _ = GetSpellInfo(spellInfo[btn.buffID+6]["spellId"][1])
+                        local buff2, rank, _, _, _, _, _ = GetSpellInfo(spellInfo[btn.buffID]["spellId"][1])
+                        btn:SetAttribute("spell-buff1", buff1)
+                        btn:SetAttribute("spell-buff2", buff2)
                         btn:Show();
                     end
                 end
@@ -366,9 +426,11 @@ function PallyPower_UpdateUI()
     end
 
     if not inLockdown then
-        for rest = BuffNum, 8 do
+        for rest = BuffNum, 9 do
             local btn = _G["PallyPowerBuffBarBuff"..rest];
-            btn:SetAttribute("spell", nil)
+            btn:SetAttribute("spell-buff1", nil)
+            btn:SetAttribute("spell-buff2", nil)
+            btn:SetAttribute("unit", nil)
             btn:Hide();
         end
         PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum-1)));
@@ -377,33 +439,21 @@ end
 
 function PallyPower_ScanSpells()
     local RankInfo = {}
-    local i = 1
-    while true do
-        local spellName, spellRank = GetSpellBookItemName(i, BOOKTYPE_SPELL)
-        if not spellName then
-            break
-        end
 
-    if not spellRank or spellRank == "" then spellRank = PallyPower_Rank1 end
-        local _,_,bless = string.find(spellName, PallyPower_BlessingSpellSearch)
-        if bless then
-            for id,name in pairs(PallyPower_BlessingID) do
-                if name==bless then
-                    local _,_,rank = string.find(spellRank, PallyPower_RankSearch);
-                    if (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
-                        -- Do Nothing
-                    else
-                        RankInfo[id] = {};
-                        RankInfo[id]["rank"] = rank;
-                        RankInfo[id]["id"] = i;
-                        RankInfo[id]["name"] = name;
-                        RankInfo[id]["talent"] = 0;
-                    end
+    for id, name in pairs(PallyPower_BlessingID) do
+        for rank, spellid in pairs(spellInfo[id]["spellId"]) do
+            local isKnown = IsPlayerSpell(spellid)
+            if isKnown then
+                if not RankInfo[id] then
+                    RankInfo[id] = {}
                 end
+                RankInfo[id]["rank"] = rank;
+                RankInfo[id]["name"] = name;
+                RankInfo[id]["talent"] = 0;
             end
         end
-        i = i + 1
     end
+
     local numTabs = GetNumTalentTabs();
     for t=1, numTabs do
         local numTalents = GetNumTalents(t);
@@ -483,7 +533,7 @@ function PallyPower_SendSelf()
         end
     end
     msg = msg .. "@"
-    for id=0,7 do
+    for id=0,8 do
         if (not PallyPower_Assignments[UnitName("player")]) or (not PallyPower_Assignments[UnitName("player")][id]) or PallyPower_Assignments[UnitName("player")][id] == -1 then
             msg = msg .. "n"
         else
@@ -519,7 +569,7 @@ function PallyPower_ParseMessage(sender, msg)
                 end
             end
             if assign then
-                for id = 0,7 do
+                for id = 0, 8 do
                     tmp = string.sub(assign, id+1, id+1)
                     if (tmp == "n" or tmp == "") then tmp = -1 end
                     PallyPower_Assignments[sender][id] = tmp + 0
@@ -541,7 +591,7 @@ function PallyPower_ParseMessage(sender, msg)
             if (not(name==sender)) and (not PallyPower_CheckRaidLeader(sender)) then return false end
             if (not PallyPower_Assignments[name]) then PallyPower_Assignments[name] = {} end
             skill=skill+0
-            for class=0, 7 do
+            for class=0, 8 do
                 PallyPower_Assignments[name][class] = skill;
             end
             PallyPower_UpdateUI()
@@ -668,7 +718,7 @@ function PallyPower_PerformCycleBackwards(name, class)
     end
 
     if shift then
-        for test=0, 7 do
+        for test=0, 8 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN "..name.." "..cur)
@@ -706,7 +756,7 @@ function PallyPower_PerformCycle(name, class)
     if (cur==6) then cur=-1 end
 
     if shift then
-        for test = 0, 7 do
+        for test = 0, 8 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN "..name.." "..cur)
@@ -816,12 +866,12 @@ function PallyPower_ScanRaid()
         PP_ScanInfo = {}
         if GetNumGroupMembers() > 0 and IsInRaid() then
             for i = 1, GetNumGroupMembers() do
-                tinsert(PP_Scanners, "raid"..i)
+                tinsert(PP_Scanners, {"raid", i})
             end
         else
-            tinsert(PP_Scanners, "player");
+            tinsert(PP_Scanners, {"player", 0});
             for i = 1, GetNumGroupMembers() do
-                tinsert(PP_Scanners, "party"..i)
+                tinsert(PP_Scanners, {"party", i})
             end
         end
     end
@@ -831,44 +881,68 @@ function PallyPower_ScanRaid()
     end
 
     while PP_Scanners[1] do
-        unit = PP_Scanners[1]
-        local name=UnitName(unit)
-        local class, englishClass =UnitClass(unit)
-        if ( name and class ) then
-            local cid = PallyPower_getClassID(englishClass)
-            if not PP_ScanInfo[cid] then
-                PP_ScanInfo[cid] = {}
-            end
-            PP_ScanInfo[cid][unit] = {};
-            PP_ScanInfo[cid][unit]["name"] = name;
-            PP_ScanInfo[cid][unit]["unitid"] = unit;
-            PP_ScanInfo[cid][unit]["visible"] = UnitIsVisible(unit);
-            PP_ScanInfo[cid][unit]["expiration"] = {};
-
-            local j=1
-            while UnitBuff(unit, j) do
-                local _, texture, _, _, _, expiration =  LCD:UnitAura(unit, j, "HELPFUL")
-                local textureID = PallyPower_getBuffID(texture)
-                if textureID >= 0 and expiration > 0 then
-                    PP_ScanInfo[cid][unit]["expiration"][textureID] = expiration
+        local groupType, groupIndex = unpack(PP_Scanners[1])
+        local unitID = groupType
+        if groupIndex > 0 then
+            unitID = unitID..groupIndex
+        end
+        local name = UnitName(unitID)
+        local class, englishClass = UnitClass(unitID)
+        if (name and class) then
+            local classID = PallyPower_getClassID(englishClass)
+            if not PP_ScanInfo[classID] then PP_ScanInfo[classID] = {} end
+            PP_ScanInfo[classID][unitID] = PallyPower_getUnitInfo(unitID);
+            if classID == 5 then    -- hunters
+                local petUnitID = groupType.."pet"..groupIndex
+                local pet_name = UnitName(petUnitID)
+                if pet_name then
+                    local classID = 8
+                    if not PP_ScanInfo[classID] then PP_ScanInfo[classID] = {} end
+                    PP_ScanInfo[classID][petUnitID] = PallyPower_getUnitInfo(petUnitID);
                 end
-                if textureID > 5 then
-                    textureID = textureID - 6
-                end
-
-                PP_ScanInfo[cid][unit][textureID] = true
-                j=j+1
+            elseif classID == 7 then    -- warlocks
+                -- buffing phase shifted imps is an issue
+                -- shouldn't really be necessary to include warlock pets
             end
         end
         tremove(PP_Scanners, 1)
         tests = tests - 1
-        PP_Debug("Scanning "..unit.." and "..tests.." remain");
+        PP_Debug("Scanning "..unitID.." and "..tests.." remain");
         if (tests <= 0) then return end
     end
     CurrentBuffs = PP_ScanInfo
     PP_ScanInfo = nil
     PP_NextScan = PP_PerUser.scanfreq
     PallyPower_ScanInventory()
+end
+
+
+function PallyPower_getUnitInfo(unitID)
+    local info = {}
+
+    info["unitid"] = unitID;
+    info["name"] = UnitName(unitID);
+    info["visible"] = UnitIsVisible(unitID);
+    info["expiration"] = {};
+
+    local j = 1;
+    local name, texture, _, _, _, expiration =  LCD:UnitAura(unitID, j, "HELPFUL")
+    while name do
+        local textureID = PallyPower_getBuffID(texture)
+
+        if textureID > 5 then
+            textureID = textureID - 6
+        end
+
+        if textureID >= 0 and expiration > 0 then
+            info["expiration"][textureID] = expiration
+        end
+
+        info[textureID] = true
+        j=j+1
+        name, texture, _, _, _, expiration =  LCD:UnitAura(unitID, j, "HELPFUL")
+    end
+    return info;
 end
 
 
@@ -883,8 +957,8 @@ end
 
 
 function PallyPower_getBuffID(text)
-    for id, name in pairs(BuffIcon) do
-        if (name==text) then
+    for id, info in pairs(spellInfo) do
+        if (info["icon"]==text) then
             return id
         end
     end

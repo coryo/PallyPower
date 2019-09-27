@@ -223,7 +223,7 @@
 				</Texture>
 				<Texture name="$parentLine" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
-						<AbsDimension x="576" y="2"/>
+						<AbsDimension x="632" y="2"/>
 					</Size>
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -323,6 +323,18 @@
 					</Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentLine8">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentLine10" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+					<Size>
+						<AbsDimension x="2" y="56"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentLine9">
 							<Offset>
 								<AbsDimension x="56" y="0"/>
 							</Offset>
@@ -458,6 +470,15 @@
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="$parentClass8" inherits="BuffGridButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentClass7" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 		</Frames>
 	</Frame>
 
@@ -577,6 +598,15 @@
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="$parentBuff9" inherits="PallyPowerBuffButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentBuff8" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 			<Button name="$parentResizeButton" inherits="PallyPowerResizeTemplate">
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT">
@@ -594,7 +624,7 @@
 
 	<Frame name="PallyPowerFrame" hidden="true" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent">
 		<Size>
-			<AbsDimension x="590" y="760"/>
+			<AbsDimension x="646" y="760"/>
 		</Size>
 		<Anchors>
 			<Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
@@ -712,6 +742,18 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+				<Texture name="$parentLine10" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+					<Size>
+						<AbsDimension x="2" y="56"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentLine9">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
 				<Texture name="$parentClass0" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
 					<TexCoords left="0" right="0.25" top="0" bottom="0.25" />
 					<Size>
@@ -810,6 +852,18 @@
 					</Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentClass6">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentClass8" file="interface\icons\ability_mount_whitetiger.blp" hidden="false">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentClass7">
 							<Offset>
 								<AbsDimension x="56" y="0"/>
 							</Offset>
