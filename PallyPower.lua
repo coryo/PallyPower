@@ -901,8 +901,23 @@ function PallyPower_ScanRaid()
                     PP_ScanInfo[classID][petUnitID] = PallyPower_getUnitInfo(petUnitID);
                 end
             elseif classID == 7 then    -- warlocks
-                -- buffing phase shifted imps is an issue
-                -- shouldn't really be necessary to include warlock pets
+                local petUnitID = groupType.."pet"..groupIndex
+                local pet_name = UnitName(petUnitID)
+                if pet_name then
+                    local i = 1;
+                    local phaseShifted = false;
+                    local name, icon, _ = UnitBuff(petUnitID, i)
+                    while name do
+                        if icon == 136164 then phaseShifted = true; break; end
+                        i = i + 1;
+                        name, icon, _ = UnitBuff(petUnitID, i)
+                    end
+                    if not phaseShifted then
+                        local classID = 8
+                        if not PP_ScanInfo[classID] then PP_ScanInfo[classID] = {} end
+                        PP_ScanInfo[classID][petUnitID] = PallyPower_getUnitInfo(petUnitID)
+                    end
+                end
             end
         end
         tremove(PP_Scanners, 1)
