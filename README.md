@@ -1,3 +1,14 @@
+### The port of the WoTLK version is now fully functional and available from curseforge:
+
+https://www.curseforge.com/wow/addons/pally-power
+
+
+
+--------
+--------
+--------
+
+
 # PallyPower Classic
 
 ![image](https://user-images.githubusercontent.com/678207/64878062-a5c59e00-d620-11e9-98c6-4f49d44fb077.png)
