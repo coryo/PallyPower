@@ -52,17 +52,6 @@
 		<Size>
 			<AbsDimension x="100" y="34" />
 		</Size>
-		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="" tile="true">
-			<EdgeSize>
-				<AbsValue val="8"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val="8"/>
-			</TileSize>
-			<!--<BackgroundInsets>
-      <AbsInset left="2" right="2" top="3" bottom="2"/>
-    </BackgroundInsets>-->
-		</Backdrop>
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name="$parentTime" inherits="GameFontHighlightSmall" text="15:00" justifyH="RIGHT">
@@ -122,6 +111,7 @@
 			<OnLeave function="PallyPowerBuffButton_OnLeave" />
 		</Scripts>
 	</Button>
+
 	<Frame name="UserTemplate" hidden="false" virtual="true">
 		<Size>
 			<AbsDimension x="576" y="56" />
@@ -223,7 +213,7 @@
 				</Texture>
 				<Texture name="$parentLine" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
 					<Size>
-						<AbsDimension x="632" y="2"/>
+						<AbsDimension x="688" y="2"/>
 					</Size>
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -335,6 +325,18 @@
 					</Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentLine9">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentLine11" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+					<Size>
+						<AbsDimension x="2" y="56"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentLine10">
 							<Offset>
 								<AbsDimension x="56" y="0"/>
 							</Offset>
@@ -479,6 +481,15 @@
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="$parentClass9" inherits="BuffGridButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentClass8" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 		</Frames>
 	</Frame>
 
@@ -504,7 +515,7 @@
 				<Scripts>
 					<OnEnter function="PallyPower_ShowCredits" />
 					<OnLeave>
-					HideUIPanel(GameTooltip);
+						HideUIPanel(GameTooltip);
 					</OnLeave>
 					<OnMouseDown function="PallyPowerBuffBar_MouseDown" />
 					<OnMouseUp function="PallyPowerBuffBar_MouseUp" />
@@ -607,6 +618,15 @@
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="$parentBuff10" inherits="PallyPowerBuffButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentBuff9" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 			<Button name="$parentResizeButton" inherits="PallyPowerResizeTemplate">
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT">
@@ -624,7 +644,7 @@
 
 	<Frame name="PallyPowerFrame" hidden="true" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent">
 		<Size>
-			<AbsDimension x="646" y="760"/>
+			<AbsDimension x="702" y="760"/>
 		</Size>
 		<Anchors>
 			<Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
@@ -633,17 +653,6 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
-			<EdgeSize>
-				<AbsValue val="16"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val="16"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left="5" right="5" top="5" bottom="5"/>
-			</BackgroundInsets>
-		</Backdrop>
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture name="$parentLine2" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
@@ -754,6 +763,18 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+				<Texture name="$parentLine11" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+					<Size>
+						<AbsDimension x="2" y="56"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentLine10">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
 				<Texture name="$parentClass0" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
 					<TexCoords left="0" right="0.25" top="0" bottom="0.25" />
 					<Size>
@@ -858,7 +879,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentClass8" file="interface\icons\ability_mount_whitetiger.blp" hidden="false">
+				<Texture name="$parentClass8" file="Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES" hidden="false">
+					<TexCoords left="0.25" right="0.49609375" top="0.25" bottom="0.5" />
 					<Size>
 						<AbsDimension x="32" y="32"/>
 					</Size>
@@ -870,9 +892,21 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+				<Texture name="$parentClass9" file="interface\icons\ability_mount_whitetiger.blp" hidden="false">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentClass8">
+							<Offset>
+								<AbsDimension x="56" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
 			</Layer>
-
 		</Layers>
+
 		<Frames>
 			<Button name="$parentTitle">
 				<Anchors>
@@ -888,7 +922,7 @@
 				<Scripts>
 					<OnEnter function="PallyPower_ShowCredits" />
 					<OnLeave>
-             HideUIPanel(GameTooltip);
+            			HideUIPanel(GameTooltip);
 					</OnLeave>
 					<OnMouseDown function="PallyPowerFrame_MouseDown" />
 					<OnMouseUp function="PallyPowerFrame_MouseUp" />
@@ -1047,7 +1081,12 @@
 			<OnEvent function="PallyPower_OnEvent" />
 			<OnMouseUp function="PallyPowerFrame_MouseUp" />
 			<OnMouseDown function="PallyPowerFrame_MouseDown" />
-			<OnHide>if ( self.isMoving ) then self:StopMovingOrSizing(); self.isMoving = false; end</OnHide>
+			<OnHide>
+				if ( self.isMoving ) then
+					self:StopMovingOrSizing();
+					self.isMoving = false;
+				end
+			</OnHide>
 		</Scripts>
 	</Frame>
 
@@ -1059,23 +1098,12 @@
 
 	<Frame name="PallyPower_OptionsFrame" hidden="true" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent">
 		<Size>
-			<AbsDimension x="300" y="300"/>
+			<AbsDimension x="300" y="125"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
-			<EdgeSize>
-				<AbsValue val="16"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val="16"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left="5" right="5" top="5" bottom="5"/>
-			</BackgroundInsets>
-		</Backdrop>
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name="$parentTitle" inherits="GameFontNormal" text="PALLYPOWER_OPTIONS_TITLE" justifyH="CENTER">
@@ -1138,7 +1166,6 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-
 			</Layer>
 		</Layers>
 		<Frames>
@@ -1197,25 +1224,26 @@
 				<FontString inherits="ChatFontNormal"/>
 				<Scripts>
 					<OnShow>
-			self:SetNumeric(1);
-			self:SetText(PP_PerUser.scanfreq);
+						self:SetNumeric(1);
+						self:SetText(PP_PerUser.scanfreq);
+						self:SetTextInsets(3,0,0,0);
 					</OnShow>
 					<OnTabPressed>
-				PallyPower_OptionsFrameScan2:SetFocus();
+						PallyPower_OptionsFrameScan2:SetFocus();
 					</OnTabPressed>
 					<OnEditFocusLost>
-				self:HighlightText(0, 0);
+						self:HighlightText(0, 0);
 					</OnEditFocusLost>
 					<OnEnterPressed>
-				PallyPower_OptionsFrameScan2:SetFocus();
+						PallyPower_OptionsFrameScan2:SetFocus();
 					</OnEnterPressed>
 					<OnEscapePressed>
-				self:GetParent():Hide();
+						self:GetParent():Hide();
 					</OnEscapePressed>
 					<OnTextChanged>
-				if (self:GetNumber() > 0) then
-				PallyPower_SetOption("scanfreq", self:GetNumber());
-				end
+						if (self:GetNumber() > 0) then
+							PallyPower_SetOption("scanfreq", self:GetNumber());
+						end
 					</OnTextChanged>
 				</Scripts>
 			</EditBox>
@@ -1265,28 +1293,29 @@
 				<FontString inherits="ChatFontNormal"/>
 				<Scripts>
 					<OnShow>
-          self:SetNumeric(1);
-          self:SetText(PP_PerUser.scanperframe);
+						self:SetNumeric(1);
+						self:SetText(PP_PerUser.scanperframe);
+						self:SetTextInsets(3,0,0,0);
 					</OnShow>
 					<OnTabPressed>
-			PallyPower_OptionsFrameScan1:SetFocus();
+						PallyPower_OptionsFrameScan1:SetFocus();
 					</OnTabPressed>
 					<OnEditFocusLost>
-			self:HighlightText(0, 0);
+						self:HighlightText(0, 0);
 					</OnEditFocusLost>
 					<OnChar>
 
 					</OnChar>
 					<OnEnterPressed>
-			PallyPower_OptionsFrameScan1:SetFocus();
+						PallyPower_OptionsFrameScan1:SetFocus();
 					</OnEnterPressed>
 					<OnEscapePressed>
-			self:GetParent():Hide();
+						self:GetParent():Hide();
 					</OnEscapePressed>
 					<OnTextChanged>
-			if (self:GetNumber() > 0) then
-			PallyPower_SetOption("scanperframe", self:GetNumber());
-			end
+						if (self:GetNumber() > 0) then
+							PallyPower_SetOption("scanperframe", self:GetNumber());
+						end
 					</OnTextChanged>
 				</Scripts>
 			</EditBox>
@@ -1302,8 +1331,16 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnShow>if (PP_PerUser.chatfeedback) then self:SetChecked(true) else self:SetChecked(false) end</OnShow>
-					<OnClick>PP_PerUser.chatfeedback = self:GetChecked()</OnClick>
+					<OnShow>
+						if (PP_PerUser.chatfeedback) then
+							self:SetChecked(true);
+						else
+							self:SetChecked(false);
+						end
+					</OnShow>
+					<OnClick>
+						PP_PerUser.chatfeedback = self:GetChecked();
+					</OnClick>
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="$parentSmart" inherits="OptionsCheckButtonTemplate">
@@ -1318,16 +1355,27 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnShow>if (PP_PerUser.smartbuffs) then self:SetChecked(true) else self:SetChecked(false) end</OnShow>
-					<OnClick>PP_PerUser.smartbuffs = self:GetChecked()</OnClick>
+					<OnShow>
+						if (PP_PerUser.smartbuffs) then
+							self:SetChecked(true);
+						else
+							self:SetChecked(false);
+						end
+					</OnShow>
+					<OnClick>
+						PP_PerUser.smartbuffs = self:GetChecked();
+					</OnClick>
 				</Scripts>
 			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnLoad>
-			self:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
+				if (BackdropTemplateMixin) then
+					Mixin(self, BackdropTemplateMixin);
+				end
+				self:SetBackdrop(backdropWithEdge);
+				self:SetBackdropColor(0.0, 0.0, 0.0, 0.5);
 			</OnLoad>
 		</Scripts>
 	</Frame>
-
 </Ui>

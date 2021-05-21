@@ -1,4 +1,4 @@
-PallyPower_Version = "1.067"
+PallyPower_Version = "2.067"
 SLASH_PALLYPOWER1 = "/pp"
 SLASH_PALLYPOWER2 = "/pallypower"
 BINDING_HEADER_PALLYPOWER = "Pally Power";
@@ -39,6 +39,7 @@ PallyPower_Credits3 = ""
 PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
 PallyPower_Credits5 = "Special Thanks: Gnarf, Blackoz"
 PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg"
+PallyPower_Credits7 = "TBCC Update by Erniaa-Razorgore"
 
 -- Buff name, Class Name
 PallyPower_CouldntFind = "Couldn't find a target for %s on %s!"
@@ -46,10 +47,10 @@ PallyPower_CouldntFind = "Couldn't find a target for %s on %s!"
 -- Buff name, Class name, Person Name
 PallyPower_Casting = "Casting %s on %s (%s)"
 -- Reporting
-PallyPower_Assignments1 = "--- Paladin assignments ---"
-PallyPower_Assignments2 = "--- end of assignments ---"
+PP_Assignments1 = "--- Paladin assignments ---"
+PP_Assignments2 = "--- end of assignments ---"
 
- PallyPower_ClassID = { };
+PallyPower_ClassID = { };
 PallyPower_ClassID[0] = "Warrior";
 PallyPower_ClassID[1] = "Rogue";
 PallyPower_ClassID[2] = "Priest";
@@ -58,7 +59,8 @@ PallyPower_ClassID[4] = "Paladin";
 PallyPower_ClassID[5] = "Hunter";
 PallyPower_ClassID[6] = "Mage";
 PallyPower_ClassID[7] = "Warlock";
-PallyPower_ClassID[8] = "Pet";
+PallyPower_ClassID[8] = "Shaman";
+PallyPower_ClassID[9] = "Pet";
 
 --XML
 PALLYPOWER_CLEAR = "Clear";
@@ -105,6 +107,7 @@ if (GetLocale() == "ruRU") then
     PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
     PallyPower_Credits5 = "Special Thanks: Gnarf, Blackoz"
     PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg"
+    PallyPower_Credits7 = "TBCC Update by Erniaa-Razorgore"
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Couldn't find a target for %s on %s!"
@@ -112,8 +115,8 @@ if (GetLocale() == "ruRU") then
     -- Buff name, Class name, Person Name
     PallyPower_Casting = "Casting %s on %s (%s)"
     -- Reporting
-    PallyPower_Assignments1 = "--- Paladin assignments ---"
-    PallyPower_Assignments2 = "--- end of assignments ---"
+    PP_Assignments1 = "--- Paladin assignments ---"
+    PP_Assignments2 = "--- end of assignments ---"
 
     PallyPower_ClassID = { };
     PallyPower_ClassID[0] = "Воин";
@@ -124,6 +127,8 @@ if (GetLocale() == "ruRU") then
     PallyPower_ClassID[5] = "Охотник";
     PallyPower_ClassID[6] = "Маг";
     PallyPower_ClassID[7] = "Чернокнижник";
+    PallyPower_ClassID[8] = "Шаман";
+    PallyPower_ClassID[9] = "Pet";
 
     -- XML Localization
     PALLYPOWER_CLEAR = "Clear";
@@ -159,12 +164,13 @@ elseif (GetLocale() == "deDE") then
 
     --- By Lines... Keep People the same, feel free to add yourself in the _Credits3 line if your localizing
     --- And feel free to add a friend or two to special thanks
-    PallyPower_Credits1 = "Pally Power - von Gnarf aka Sneakyfoot";
+    PallyPower_Credits1 = "Pally Power - by Aznamir"
     PallyPower_Credits2 = "Version "..PallyPower_Version;
     PallyPower_Credits3 = "Deutsche Lokalisierung von Nextorus";
     PallyPower_Credits4 = "Erstellt f\195\188r Resurrection auf Nathrezim";
     PallyPower_Credits5 = "Vielen Dank an: Falline, Indada, Pinch, Tir, Ossijeanne";
     PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg";
+    PallyPower_Credits7 = "TBCC Update by Erniaa-Razorgore";
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Konnte kein Ziel finden f\195\188r %s auf %s!";
@@ -172,7 +178,7 @@ elseif (GetLocale() == "deDE") then
     -- Buff name, Class name, Person Name
     PallyPower_Casting = "Spreche %s auf %s (%s)";
 
-     PallyPower_ClassID = { };
+    PallyPower_ClassID = { };
     PallyPower_ClassID[0] = "Krieger";
     PallyPower_ClassID[1] = "Schurke";
     PallyPower_ClassID[2] = "Priester";
@@ -181,13 +187,14 @@ elseif (GetLocale() == "deDE") then
     PallyPower_ClassID[5] = "J\195\164ger";
     PallyPower_ClassID[6] = "Magier";
     PallyPower_ClassID[7] = "Hexenmeister";
+    PallyPower_ClassID[8] = "Schamane";
+    PallyPower_ClassID[9] = "Pet";
 
     -- XML Localization
     PALLYPOWER_CLEAR = "L\195\182schen";
     PALLYPOWER_REFRESH = "Neu abfragen";
 elseif (GetLocale() == "frFR") then
-
--- by Gagou @ EU-Drek'Thar (thomas@ranchon.org)
+    -- by Gagou @ EU-Drek'Thar (thomas@ranchon.org)
     PallyPower_BlessingID = { };
     PallyPower_BlessingID[0] = "de sagesse";
     PallyPower_BlessingID[1] = "de puissance";
@@ -219,9 +226,10 @@ elseif (GetLocale() == "frFR") then
     PallyPower_Credits1 = "Pally Power - by Gnarf aka Sneakyfoot"
     PallyPower_Credits2 = "Version "..PallyPower_Version
     PallyPower_Credits3 = "Localisation Francaise par Gagou"
-    PallyPower_Credits4 = "Made for Resurrection of Nathrezim"
+    PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
     PallyPower_Credits5 = "Special Thanks: Falline, Indada, Pinch, Tir"
     PallyPower_Credits6 = "Classic Update by Starhammer-Stalagg"
+    PallyPower_Credits7 = "TBCC Update by Erniaa-Razorgore"
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Ne peut trouver une cible pour b\195\169n\195\169diction %s sur %s!"
@@ -230,7 +238,7 @@ elseif (GetLocale() == "frFR") then
     PallyPower_Casting = "Lance b\195\169n\195\169diction %s sur %s (%s)"
 
 
-     PallyPower_ClassID = { };
+    PallyPower_ClassID = { };
     PallyPower_ClassID[0] = "Guerrier";
     PallyPower_ClassID[1] = "Voleur";
     PallyPower_ClassID[2] = "Pr\195\170tre";
@@ -239,13 +247,13 @@ elseif (GetLocale() == "frFR") then
     PallyPower_ClassID[5] = "Chasseur";
     PallyPower_ClassID[6] = "Mage";
     PallyPower_ClassID[7] = "D\195\169moniste";
+    PallyPower_ClassID[8] = "Chaman";
+    PallyPower_ClassID[9] = "Pet";
 
     --XML
     PALLYPOWER_CLEAR = "Nettoyer";
     PALLYPOWER_REFRESH = "Rafraichir";
-
 elseif (GetLocale() == "zhCN") then
-
     -- by Qcat
     PallyPower_BlessingID[0] = "智慧";
     PallyPower_BlessingID[1] = "力量";
@@ -280,6 +288,7 @@ elseif (GetLocale() == "zhCN") then
     PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
     PallyPower_Credits5 = "特别感谢: Gnarf, Blackoz"
     PallyPower_Credits6 = "Classic（官方怀旧）由 Starhammer-Stalagg 更新"
+    PallyPower_Credits7 = "TBCC 由 Erniaa-Razorgore 更新"
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "无法找到buff: %s 职业: %s!"
@@ -287,8 +296,8 @@ elseif (GetLocale() == "zhCN") then
     -- Buff name, Class name, Person Name
     PallyPower_Casting = "正在施放 %s 给 %s (%s)"
     -- Reporting
-    PallyPower_Assignments1 = "--- 骑士祝福分配 ---"
-    PallyPower_Assignments2 = "--- 结束 ---"
+    PP_Assignments1 = "--- 骑士祝福分配 ---"
+    PP_Assignments2 = "--- 结束 ---"
 
     PallyPower_ClassID = { };
     PallyPower_ClassID[0] = "战士";
@@ -299,6 +308,8 @@ elseif (GetLocale() == "zhCN") then
     PallyPower_ClassID[5] = "猎人";
     PallyPower_ClassID[6] = "法师";
     PallyPower_ClassID[7] = "术士";
+    PallyPower_ClassID[8] = "萨满祭司";
+    PallyPower_ClassID[9] = "Pet";
 
     --XML
     PALLYPOWER_CLEAR = "清除";

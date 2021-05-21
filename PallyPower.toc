@@ -1,9 +1,11 @@
-## Interface: 11302
+## Interface: 20501
 ## Title: PallyPower
 ## Author: Aznamir
+## Notes: Raid/Party Paladin buffs.
+## Version: 2.067
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## SavedVariablesPerCharacter: PP_PerUser,PallyPower_Assignments
+## SavedVariablesPerCharacter: PP_PerUser,PP_Assignments
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
