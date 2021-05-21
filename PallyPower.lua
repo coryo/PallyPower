@@ -832,7 +832,7 @@ function PallyPower_NeedsBuff(class, test)
             return false
         end
         -- no might for casters
-        if (class == 2 or class == 5 or class == 6 or class == 7) and test == 1 then
+        if (class == 2 or class == 6 or class == 7) and test == 1 then
             return false
         end
     end
